@@ -1,0 +1,12 @@
+{
+  "name": "sales-emailer",
+  "version": "1.0.0",
+  "description": "AI-powered sales email sequencer using Claude + HubSpot + Outlook",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.0"
+  }
+}
