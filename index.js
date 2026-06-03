@@ -263,20 +263,6 @@ async function enrollNewApolloContacts() {
               },
             ],
           },
-          {
-            filters: [
-              {
-                propertyName: "hubspot_owner_id",
-                operator: "EQ",
-                value: ownerId,
-              },
-              {
-                propertyName: "sequence_active",
-                operator: "EQ",
-                value: "",
-              },
-            ],
-          },
         ],
         properties: ["firstname", "lastname", "email", "company", "sequence_active", "sequence_step"],
         limit: 100,
