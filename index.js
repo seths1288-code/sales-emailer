@@ -525,177 +525,71 @@ FORMATTING:
 // -------------------------------------------------------------------
 // STEP 4: Get Microsoft Outlook token
 // -------------------------------------------------------------------
-async function getOutlookToken() {
-  const url = `https://login.microsoftonline.com/${process.env.MICROSOFT_TENANT_ID}/oauth2/v2.0/token`;
-  const body = new URLSearchParams({
-    client_id: process.env.MICROSOFT_CLIENT_ID,
-    client_secret: process.env.MICROSOFT_CLIENT_SECRET,
-    scope: "https://graph.microsoft.com/.default",
-    grant_type: "client_credentials",
+async function testHubSpotConnection() {
+  // Simple check that our HubSpot key works before we start sending
+  const res = await fetch("https://api.hubapi.com/crm/v3/objects/contacts?limit=1", {
+    headers: hubspotHeaders,
   });
+  if (!res.ok) {
+    throw new Error("HubSpot connection failed: " + res.status);
+  }
+  return true;
+}
 
-  const res = await fetch(url, {
+
+// -------------------------------------------------------------------
+// STEP 5: Send email via HubSpot (uses your connected Outlook account)
+// Email 1 sends fresh. Emails 2-8 reply in the same thread using
+// HubSpot's in_reply_to field to keep the conversation threaded.
+// -------------------------------------------------------------------
+async function sendViaHubSpot(contact, subject, body, inReplyToId) {
+  const senderEmail = process.env.SENDER_EMAIL;
+
+  const emailPayload = {
+    properties: {
+      hs_email_direction: "EMAIL",
+      hs_email_subject: subject,
+      hs_email_text: body,
+      hs_email_status: "SENT",
+      hs_timestamp: Date.now(),
+      hs_email_from_email: senderEmail,
+      hs_email_from_firstname: process.env.SENDER_NAME || "Seth",
+      hs_email_to_email: contact.email,
+      hs_email_to_firstname: contact.firstName,
+      hs_email_to_lastname: contact.lastName,
+    },
+    associations: [
+      {
+        to: { id: contact.id },
+        types: [
+          {
+            associationCategory: "HUBSPOT_DEFINED",
+            associationTypeId: 198,
+          },
+        ],
+      },
+    ],
+  };
+
+  // If this is a follow-up, attach it to the original thread
+  if (inReplyToId) {
+    emailPayload.properties.hs_email_in_reply_to_id = inReplyToId;
+  }
+
+  const res = await fetch("https://api.hubapi.com/crm/v3/objects/emails", {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: body.toString(),
+    headers: hubspotHeaders,
+    body: JSON.stringify(emailPayload),
   });
 
   const data = await res.json();
-  if (!data.access_token) {
-    throw new Error("Outlook auth failed: " + JSON.stringify(data));
-  }
-  return data.access_token;
-}
 
-// -------------------------------------------------------------------
-// STEP 5a: Send Email 1 (new thread) — capture the Message-ID
-// Returns the internetMessageId so we can thread all future emails
-// -------------------------------------------------------------------
-async function sendFirstEmail(token, contact, subject, body) {
-  const senderEmail = process.env.SENDER_EMAIL;
-
-  // Send the email
-  const sendRes = await fetch(
-    `https://graph.microsoft.com/v1.0/users/${senderEmail}/sendMail`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: {
-          subject,
-          body: { contentType: "Text", content: body },
-          toRecipients: [{ emailAddress: { address: contact.email } }],
-        },
-        saveToSentItems: true,
-      }),
-    }
-  );
-
-  if (sendRes.status !== 202) {
-    throw new Error(`Send failed: ${await sendRes.text()}`);
+  if (!res.ok) {
+    throw new Error(`HubSpot send failed: ${JSON.stringify(data)}`);
   }
 
-  // Wait a moment then fetch the message ID from Sent Items
-  await new Promise((r) => setTimeout(r, 3000));
-
-  const searchRes = await fetch(
-    `https://graph.microsoft.com/v1.0/users/${senderEmail}/mailFolders/SentItems/messages?$filter=subject eq '${encodeURIComponent(subject)}'&$orderby=sentDateTime desc&$top=1&$select=id,internetMessageId,subject`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
-
-  const searchData = await searchRes.json();
-  const sentMsg = searchData.value?.[0];
-
-  if (!sentMsg) {
-    console.log("  ⚠️  Could not retrieve Message-ID — threading may not work");
-    return null;
-  }
-
-  console.log(`  📧 Email 1 sent | Thread ID captured`);
-  return sentMsg.internetMessageId;
-}
-
-// -------------------------------------------------------------------
-// STEP 5b: Send a reply in the existing thread
-// Uses the saved internetMessageId to create a proper reply chain
-// -------------------------------------------------------------------
-async function sendReplyEmail(token, contact, body, threadInternetMessageId, threadSubject) {
-  const senderEmail = process.env.SENDER_EMAIL;
-
-  // Find the original sent message by its internetMessageId
-  const findRes = await fetch(
-    `https://graph.microsoft.com/v1.0/users/${senderEmail}/messages?$filter=internetMessageId eq '${encodeURIComponent(threadInternetMessageId)}'&$select=id,conversationId`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
-
-  const findData = await findRes.json();
-  const originalMsg = findData.value?.[0];
-
-  if (originalMsg) {
-    // Create a reply to the original message — this keeps the thread
-    const replyRes = await fetch(
-      `https://graph.microsoft.com/v1.0/users/${senderEmail}/messages/${originalMsg.id}/createReply`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}),
-      }
-    );
-
-    const replyMsg = await replyRes.json();
-
-    if (!replyMsg.id) {
-      throw new Error("Could not create reply draft");
-    }
-
-    // Update the reply body (Graph creates a default reply body we overwrite)
-    await fetch(
-      `https://graph.microsoft.com/v1.0/users/${senderEmail}/messages/${replyMsg.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          body: { contentType: "Text", content: body },
-          toRecipients: [{ emailAddress: { address: contact.email } }],
-        }),
-      }
-    );
-
-    // Send the reply
-    await fetch(
-      `https://graph.microsoft.com/v1.0/users/${senderEmail}/messages/${replyMsg.id}/send`,
-      {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-
-    console.log(`  📧 Reply sent in thread`);
-  } else {
-    // Fallback: if we can't find the original, send with Re: subject
-    // This keeps the conversation visually linked even if not technically threaded
-    console.log("  ⚠️  Original message not found — sending with Re: subject as fallback");
-
-    const reSubject = threadSubject.startsWith("Re: ")
-      ? threadSubject
-      : `Re: ${threadSubject}`;
-
-    const fallbackRes = await fetch(
-      `https://graph.microsoft.com/v1.0/users/${senderEmail}/sendMail`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: {
-            subject: reSubject,
-            body: { contentType: "Text", content: body },
-            toRecipients: [{ emailAddress: { address: contact.email } }],
-          },
-          saveToSentItems: true,
-        }),
-      }
-    );
-
-    if (fallbackRes.status !== 202) {
-      throw new Error(`Fallback send failed: ${await fallbackRes.text()}`);
-    }
-  }
+  console.log(`  📧 Email sent via HubSpot (id: ${data.id})`);
+  return data.id;
 }
 
 // -------------------------------------------------------------------
@@ -779,8 +673,8 @@ async function main() {
   }
 
   try {
-    console.log("🔑 Authenticating with Outlook...");
-    const token = await getOutlookToken();
+    console.log("🔑 Connecting to HubSpot...");
+    await testHubSpotConnection();
     console.log("  ✅ Connected\n");
 
     // Auto-enroll any new contacts synced from Apollo in the last 24hrs
@@ -838,13 +732,15 @@ async function main() {
         const subject = fillTemplate(emailDef.subject, contact);
 
         if (step === 0) {
-          // First email — send fresh, capture thread ID
-          const threadId = await sendFirstEmail(token, contact, subject, body);
-          await updateHubSpot(contact, body, subject, step + 1, threadId, subject);
+          // First email — send fresh, save HubSpot email ID for threading
+          const emailId = await sendViaHubSpot(contact, subject, body, null);
+          await updateHubSpot(contact, body, subject, step + 1, emailId, subject);
         } else {
-          // All follow-ups — reply in the original thread
-          const threadSubject = contact.threadSubject || `re: ${subject}`;
-          await sendReplyEmail(token, contact, body, contact.threadId, threadSubject);
+          // All follow-ups — reply in the original thread via HubSpot
+          const reSubject = contact.threadSubject
+            ? `Re: ${contact.threadSubject}`
+            : `Re: quick question`;
+          await sendViaHubSpot(contact, reSubject, body, contact.threadId);
           await updateHubSpot(contact, body, null, step + 1, null, null);
         }
 
