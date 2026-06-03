@@ -251,10 +251,9 @@ async function enrollNewApolloContacts() {
   const ownerId = ownerData.results[0].id;
   console.log(`  Found owner ID: ${ownerId}`);
 
-  // Step 2: Search for contacts owned by Seth, created in last 24 hours,
-  // with no sequence_active set yet — so existing contacts are never touched
-  const last24hrs = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-
+  // Step 2: Search for contacts owned by Seth with blank sequence_active.
+  // Existing contacts are protected because we already bulk-set them to false.
+  // Only brand new contacts from Apollo will have a blank sequence_active.
   const response = await fetch(
     "https://api.hubapi.com/crm/v3/objects/contacts/search",
     {
@@ -270,11 +269,6 @@ async function enrollNewApolloContacts() {
                 value: ownerId,
               },
               {
-                propertyName: "createdate",
-                operator: "GTE",
-                value: last24hrs,
-              },
-              {
                 propertyName: "sequence_active",
                 operator: "NOT_HAS_PROPERTY",
               },
@@ -286,11 +280,6 @@ async function enrollNewApolloContacts() {
                 propertyName: "hubspot_owner_id",
                 operator: "EQ",
                 value: ownerId,
-              },
-              {
-                propertyName: "createdate",
-                operator: "GTE",
-                value: last24hrs,
               },
               {
                 propertyName: "sequence_active",
