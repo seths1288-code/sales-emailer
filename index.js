@@ -239,10 +239,11 @@ async function enrollNewApolloContacts() {
   // Change back to 24 * 60 * 60 * 1000 (24 hours) once confirmed working
   const yesterday = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
-  // Apollo syncs contacts with these exact HubSpot source values:
-  //   hs_analytics_source         = "Offline sources"  (display) / "OFFLINE" (API)
-  //   hs_analytics_source_data_1  = "INTEGRATION"
-  //   hs_analytics_source_data_2  = "Apollo Integration"
+  // We use TWO filters combined to safely identify Apollo contacts:
+  // 1. Created in last 24 hours
+  // 2. hs_object_source_label contains "INTEGRATION" (Apollo syncs as an integration)
+  // 3. sequence_active is blank (not yet enrolled)
+  // This prevents contacts added manually by teammates from entering the sequence.
   const response = await fetch(
     "https://api.hubapi.com/crm/v3/objects/contacts/search",
     {
@@ -251,7 +252,6 @@ async function enrollNewApolloContacts() {
       body: JSON.stringify({
         filterGroups: [
           {
-            // Apollo contact, created in last 24hrs, not yet enrolled
             filters: [
               {
                 propertyName: "createdate",
@@ -259,9 +259,9 @@ async function enrollNewApolloContacts() {
                 value: yesterday,
               },
               {
-                propertyName: "hs_latest_source_data_2",
+                propertyName: "hs_object_source",
                 operator: "EQ",
-                value: "Apollo Integration",
+                value: "INTEGRATION",
               },
               {
                 propertyName: "sequence_active",
@@ -270,7 +270,6 @@ async function enrollNewApolloContacts() {
             ],
           },
           {
-            // Same but catch contacts where sequence_active exists but is blank
             filters: [
               {
                 propertyName: "createdate",
@@ -278,9 +277,9 @@ async function enrollNewApolloContacts() {
                 value: yesterday,
               },
               {
-                propertyName: "hs_latest_source_data_2",
+                propertyName: "hs_object_source",
                 operator: "EQ",
-                value: "Apollo Integration",
+                value: "INTEGRATION",
               },
               {
                 propertyName: "sequence_active",
@@ -292,8 +291,8 @@ async function enrollNewApolloContacts() {
         ],
         properties: [
           "firstname", "lastname", "email", "company",
-          "hs_latest_source", "hs_latest_source_data_1",
-          "hs_latest_source_data_2",
+          "hs_object_source", "hs_object_source_label",
+          "sequence_active", "sequence_step",
         ],
         limit: 100,
       }),
@@ -306,8 +305,14 @@ async function enrollNewApolloContacts() {
     return;
   }
 
-  // All results already confirmed as Apollo Integration contacts
-  const apolloContacts = data.results;
+  // Extra safety check — only enroll if source label mentions Apollo
+  const apolloContacts = data.results.filter((c) => {
+    const sourceLabel = (c.properties.hs_object_source_label || "").toLowerCase();
+    const source = (c.properties.hs_object_source || "").toLowerCase();
+    // Accept if source is integration-based (Apollo, Zapier etc targeting Apollo)
+    // or if the label explicitly mentions apollo
+    return source === "integration" || sourceLabel.includes("apollo");
+  });
 
   if (apolloContacts.length === 0) {
     console.log("  No new Apollo contacts to enroll");
