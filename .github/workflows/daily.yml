@@ -1,0 +1,49 @@
+# This file is your "alarm clock"
+# It tells GitHub to run your email script every morning at 8am UTC
+# (Adjust the time below if you want a different timezone)
+
+name: Daily Sales Emails
+
+on:
+  # Runs at 9am Mountain Time (MT = UTC-6, so 3pm UTC)
+  # The script itself adds a random delay of 0-3 hours before starting
+  # so emails land anywhere between 9am and 12pm Mountain Time
+  schedule:
+    - cron: "0 15 * * 1-5"  # Weekdays only (Mon-Fri)
+
+  # Run manually from GitHub for testing
+  workflow_dispatch:
+
+jobs:
+  send-emails:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download your code from GitHub
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Step 3: Install the packages your code needs
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Run your email script
+      # GitHub secretly injects your API keys here (you'll add them in Settings)
+      - name: Run email sequencer
+        env:
+          HUBSPOT_API_KEY: ${{ secrets.HUBSPOT_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
+          MICROSOFT_CLIENT_SECRET: ${{ secrets.MICROSOFT_CLIENT_SECRET }}
+          MICROSOFT_TENANT_ID: ${{ secrets.MICROSOFT_TENANT_ID }}
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          SENDER_NAME: ${{ secrets.SENDER_NAME }}
+          SENDER_COMPANY: ${{ secrets.SENDER_COMPANY }}
+          SENDER_TITLE: ${{ secrets.SENDER_TITLE }}
+        run: node index.js
