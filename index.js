@@ -300,19 +300,22 @@ async function enrollNewApolloContacts() {
   );
 
   const data = await response.json();
+  
+  // Debug: log what we found so we can see the exact source values
+  if (data.results && data.results.length > 0) {
+    console.log(`  Found ${data.results.length} recent contact(s) — checking sources:`);
+    data.results.forEach(c => {
+      console.log(`    ${c.properties.firstname} ${c.properties.lastname}: source="${c.properties.hs_object_source}" label="${c.properties.hs_object_source_label}"`);
+    });
+  }
+
   if (!data.results || data.results.length === 0) {
-    console.log("  No new Apollo contacts to enroll");
+    console.log("  No new contacts found in last 7 days");
     return;
   }
 
-  // Extra safety check — only enroll if source label mentions Apollo
-  const apolloContacts = data.results.filter((c) => {
-    const sourceLabel = (c.properties.hs_object_source_label || "").toLowerCase();
-    const source = (c.properties.hs_object_source || "").toLowerCase();
-    // Accept if source is integration-based (Apollo, Zapier etc targeting Apollo)
-    // or if the label explicitly mentions apollo
-    return source === "integration" || sourceLabel.includes("apollo");
-  });
+  // Enroll all recent contacts for now — we'll filter once we see the source values
+  const apolloContacts = data.results;
 
   if (apolloContacts.length === 0) {
     console.log("  No new Apollo contacts to enroll");
