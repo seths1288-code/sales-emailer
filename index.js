@@ -236,19 +236,35 @@ async function enrollNewApolloContacts() {
   console.log("🔍 Checking for new contacts owned by Seth to enroll...");
 
   // Step 1: Get Seth's HubSpot owner ID from his email
+  // Try fetching all owners and find Seth by email
   const ownerRes = await fetch(
-    `https://api.hubapi.com/crm/v3/owners?email=${encodeURIComponent(process.env.SENDER_EMAIL)}&limit=1`,
+    `https://api.hubapi.com/crm/v3/owners?limit=100`,
     { headers: hubspotHeaders }
   );
 
   const ownerData = await ownerRes.json();
 
   if (!ownerData.results || ownerData.results.length === 0) {
-    console.log(`  Could not find HubSpot owner for ${process.env.SENDER_EMAIL}`);
+    console.log(`  Owner lookup failed: ${JSON.stringify(ownerData)}`);
     return;
   }
 
-  const ownerId = ownerData.results[0].id;
+  // Log all owners so we can see what's there
+  console.log(`  Found ${ownerData.results.length} owner(s):`);
+  ownerData.results.forEach(o => {
+    console.log(`    ID: ${o.id} | Email: ${o.email} | Name: ${o.firstName} ${o.lastName}`);
+  });
+
+  const owner = ownerData.results.find(o =>
+    o.email && o.email.toLowerCase() === (process.env.SENDER_EMAIL || "").toLowerCase()
+  );
+
+  if (!owner) {
+    console.log(`  Could not find owner matching ${process.env.SENDER_EMAIL}`);
+    return;
+  }
+
+  const ownerId = owner.id;
   console.log(`  Found owner ID: ${ownerId}`);
 
   // Step 2: Search for contacts owned by Seth with blank sequence_active.
