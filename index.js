@@ -660,6 +660,9 @@ async function main() {
     await enrollNewApolloContacts();
     console.log("");
 
+    // Wait for HubSpot to index newly enrolled contacts
+    await new Promise((r) => setTimeout(r, 5000));
+
     const prospects = await getActiveProspects();
     console.log(`  Found ${prospects.length} active prospect(s)\n`);
 
