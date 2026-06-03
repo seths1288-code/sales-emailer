@@ -237,9 +237,10 @@ async function enrollNewApolloContacts() {
 
   const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
-  // Apollo syncs contacts into HubSpot as "Offline Sources" via "Apollo Integration"
-  // This maps to hs_analytics_source = "OFFLINE" in HubSpot's contact properties.
-  // We also confirm sequence_active has never been set so we never re-enroll anyone.
+  // Apollo syncs contacts with these exact HubSpot source values:
+  //   hs_analytics_source         = "Offline sources"  (display) / "OFFLINE" (API)
+  //   hs_analytics_source_data_1  = "INTEGRATION"
+  //   hs_analytics_source_data_2  = "Apollo Integration"
   const response = await fetch(
     "https://api.hubapi.com/crm/v3/objects/contacts/search",
     {
@@ -256,9 +257,9 @@ async function enrollNewApolloContacts() {
                 value: yesterday,
               },
               {
-                propertyName: "hs_analytics_source",
+                propertyName: "hs_analytics_source_data_2",
                 operator: "EQ",
-                value: "OFFLINE",
+                value: "Apollo Integration",
               },
               {
                 propertyName: "sequence_active",
@@ -275,9 +276,9 @@ async function enrollNewApolloContacts() {
                 value: yesterday,
               },
               {
-                propertyName: "hs_analytics_source",
+                propertyName: "hs_analytics_source_data_2",
                 operator: "EQ",
-                value: "OFFLINE",
+                value: "Apollo Integration",
               },
               {
                 propertyName: "sequence_active",
@@ -303,13 +304,8 @@ async function enrollNewApolloContacts() {
     return;
   }
 
-  // Double-check each contact actually came from Apollo and not some other offline source
-  // by checking that one of the source data fields mentions apollo
-  const apolloContacts = data.results.filter((c) => {
-    const src1 = (c.properties.hs_analytics_source_data_1 || "").toLowerCase();
-    const src2 = (c.properties.hs_analytics_source_data_2 || "").toLowerCase();
-    return src1.includes("apollo") || src2.includes("apollo");
-  });
+  // All results already confirmed as Apollo Integration contacts
+  const apolloContacts = data.results;
 
   if (apolloContacts.length === 0) {
     console.log("  No new Apollo contacts to enroll");
