@@ -1,13 +1,14 @@
 // ============================================================
 // AI SALES EMAIL SEQUENCER — THE PHMP
-// 8-touch sequence | Outlook threading | HubSpot logging
+// 8-touch sequence | Microsoft Graph sending | HubSpot logging
+// Auto-enrolls new contacts owned by Seth from Apollo
 // Runs automatically every morning via GitHub Actions
 // ============================================================
 
 const Anthropic = require("@anthropic-ai/sdk");
 
 // -------------------------------------------------------------------
-// PHMP PRODUCT BRIEFING — Claude reads this before every email
+// PHMP PRODUCT BRIEFING
 // -------------------------------------------------------------------
 const PHMP_BRIEFING = `
 You are a sales rep setting intro meetings for The PHMP (Proactive Health Management Plan).
@@ -15,64 +16,60 @@ You are a sales rep setting intro meetings for The PHMP (Proactive Health Manage
 WHAT THE PHMP IS:
 The PHMP is a supplemental employee health benefits plan that layers on top of a company's 
 existing major medical plan. It combines fully-insured indemnity benefits, preventive care 
-services, and patented chronic disease management — at little to no net cost to the employer.
+services, and patented chronic disease management at little to no net cost to the employer.
 
 THE CORE PAIN YOU ARE SOLVING FOR EMPLOYERS:
 - Health insurance premiums have risen 71% since 2010
-- Average family deductibles are up 123% 
+- Average family deductibles are up 123%
 - 40% of employees delay or skip needed care because of cost
 - The chronically ill are a minority but drive the MAJORITY of claims
-- Employers feel trapped — raising deductibles or absorbing costs every year
-- Productivity and absenteeism suffer when employees can't afford to get healthy
+- Employers feel trapped raising deductibles or absorbing costs every year
+- Productivity and absenteeism suffer when employees cannot afford to get healthy
 
 HOW THE PHMP WORKS (EMPLOYER SIDE):
-- No net cost to the employer — largely pays for itself through FICA/payroll tax savings
-- Employers save $330–$450 per enrolled employee per year in payroll tax reduction alone
-- Proven 11–17% reduction in overall medical spending (5 independent studies 2006–2021)
+- No net cost to the employer largely pays for itself through FICA/payroll tax savings
+- Employers save $330 to $450 per enrolled employee per year in payroll tax reduction alone
+- Proven 11 to 17% reduction in overall medical spending confirmed across 5 independent studies 2006 to 2021
 - Combined ROI of over $681 per employee per year
 - Enhances the benefit package to attract and retain talent
-- Reduces absenteeism, improves productivity
-- No disruption — layers onto whatever plan they already have
+- Reduces absenteeism and improves productivity
+- No disruption layers onto whatever plan they already have
 
 HOW THE PHMP WORKS (EMPLOYEE SIDE):
 - 95% of employees see an increase in spendable take-home income just for participating
 - $625/month indemnity payment for completing simple healthy activities
 - $7,500/year potential in wellness incentives
 - 24/7 family telemedicine at $0 co-pay
-- Family behavioral health (therapists, PhDs, psychiatrists) at $0 co-pay
+- Family behavioral health at $0 co-pay
 - Personalized health coaching and dietary counseling
 - Biometric and DNA screenings
 - Disease management for 27 chronic conditions with a personal Nurse Navigator
-- Hospital confinement indemnity benefit ($100/day)
-- Prescription savings tool (up to 80% savings)
-- Medical price transparency tool across 500+ procedures
+- Hospital confinement indemnity benefit
+- Prescription savings tool up to 80% savings
 
 KEY PROOF POINTS:
-- 7 U.S. patents — this is not a generic wellness program
-- Backed by the American Health Data Institute (AHDI), the largest population health 
-  database in the US — data from 1.5M+ lives across 48 states
+- 7 US patents this is not a generic wellness program
+- Backed by the American Health Data Institute with data from 1.5M+ lives across 48 states
 - Fully insured by an A+ rated insurance carrier
-- 98% of clients see their cost trend line fall BELOW the national average
+- 98% of clients see their cost trend line fall below the national average
 - Confirmed ROI across RAND Corporation and AHDI studies
 
 WHO YOU ARE TARGETING:
 HR Directors, CFOs, CEOs, Benefits Managers, and Business Owners at companies with 
-50+ employees who are frustrated by rising healthcare costs and want to improve their 
-benefits package without increasing spend.
+50+ employees who are frustrated by rising healthcare costs.
 
 YOUR GOAL:
-You are NOT trying to close a sale in an email. You are trying to get a 20-minute intro 
-call. Be curious, not pushy. Focus on their pain — not our features.
-Only hint at the solution — save the details for the call.
+Get a 20 minute intro call. Not a sale. Be curious not pushy.
+Focus on their pain not our features.
 
-TONE AND STYLE RULES — these are non negotiable:
-Write like a real person typing fast between meetings, not like a marketer.
+TONE AND STYLE RULES:
+Write like a real person typing fast between meetings not like a marketer.
 Keep every email under 60 words in the body. Under 40 is even better for follow ups.
 Write the entire body as one flowing paragraph with no line breaks between thoughts.
 No bullet points, no bold, no dashes, no hyphens, no colons used for effect, no em dashes.
 No symbols of any kind that make it look formatted or AI written.
 Do not capitalize the first word after the greeting. Sentences can start lowercase.
-Use loose contractions like "thats" "youre" "ill" "dont" "ive" "havent" instead of "that's" "you're" etc.
+Use loose contractions like "thats" "youre" "ill" "dont" "ive" "havent".
 Never use words like "synergy", "game changer", "revolutionary", "best in class", "solution", "leverage", "streamline".
 Never use phrases like "I hope this finds you well" or "I wanted to reach out" or "please do not hesitate".
 The sign off is always exactly: Seth Christensen | The PHMP
@@ -80,119 +77,65 @@ Do NOT mention KBA by name.
 `;
 
 // -------------------------------------------------------------------
-// THE 8-STEP SEQUENCE
-// subject: used only on Email 1 (all others reply in thread)
-// goal: instructions passed to Claude for each step
-// research: whether to run web search before writing
+// 8-STEP SEQUENCE
 // -------------------------------------------------------------------
 const SEQUENCE = [
   {
     day: 0,
-    subject: "quick question — {{company}}",
+    subject: "quick question",
     research: true,
-    goal: `Email 1 — THE HOOK (research-led opener).
-Open with one genuine, specific observation about their company from the research below 
-(recent news, expansion, hiring, funding — whatever is most relevant to a benefits conversation).
-If research found nothing useful, reference a specific challenge common in their industry instead.
-Connect it naturally to a single soft question about their employee benefits or healthcare costs.
-End with a gentle ask for a 20-minute call. Do NOT name the PHMP yet.
-This is the first email — make it feel like it came from a real human who did their homework.`
+    goal: `Email 1 — THE HOOK. Open with one genuine specific observation about their company from the research below. If nothing useful reference a challenge common in their industry. Connect it to a soft question about their employee benefits or healthcare costs. End with a gentle ask for a 20 minute call. Do NOT name the PHMP yet.`
   },
   {
     day: 3,
     subject: null,
     research: false,
-    goal: `Email 2 — THE COST ANGLE (reply in thread, different approach from email 1).
-Open by acknowledging you're following up without being apologetic about it.
-Lead with a striking, specific stat about rising healthcare costs — premiums up 71% since 2010, 
-or deductibles up 123%, or 40% of employees skipping care because of cost.
-Mention that you've helped similar companies dramatically improve their benefits 
-without it costing the employer anything net. One question at the end.
-Do not repeat anything from email 1. Different angle entirely.`
+    goal: `Email 2 — THE COST ANGLE. Different approach from email 1. Lead with a striking stat about rising healthcare costs. Premiums up 71% since 2010, deductibles up 123%, or 40% of employees skipping care. Mention you have helped similar companies improve benefits without net cost to the employer. One question at the end.`
   },
   {
     day: 7,
     subject: null,
     research: false,
-    goal: `Email 3 — THE EMPLOYEE ANGLE (reply in thread, flip to employee perspective).
-Most benefits pitches focus on employer savings. Flip it.
-Open with the human cost: 40% of employees delay care, 6 in 10 can't cover a $500 medical bill,
-employees making $95k/year choosing between treatment and paying rent.
-Then pivot: there's a way to put real money back in their employees' pockets — 
-95% of participants see an increase in take-home pay — just for participating in a health program.
-One question asking if that's something worth a quick conversation.`
+    goal: `Email 3 — THE EMPLOYEE ANGLE. Flip to the employee side. 40% of employees delay care, 6 in 10 cannot cover a $500 medical bill. Then pivot: there is a way to put real money back in employees pockets. 95% of participants see take home pay go up just for doing basic health stuff. One question.`
   },
   {
     day: 14,
     subject: null,
     research: true,
-    goal: `Email 4 — THE PROOF (reply in thread, drop the credibility).
-Reference the company from the research if there's anything relevant (growth, hiring, 
-cost pressure) — otherwise stay general.
-Lead with the hard proof: 11–17% reduction in medical spending, confirmed across 5 independent 
-studies. 98% of the companies we work with see their healthcare cost trend line fall below 
-the national average within year one. 7 US patents. A+ rated carrier.
-Frame it as "thought this might be worth sharing given what you're dealing with at {{company}}."
-Soft ask for a call.`
+    goal: `Email 4 — THE PROOF. Drop the hard numbers. 11 to 17% reduction in medical spending confirmed across 5 independent studies. 98% of companies see their cost trend fall below the national average in year one. Seven patents. A+ rated carrier. Frame it as thought this might be worth sharing. Soft ask for a call.`
   },
   {
     day: 21,
     subject: null,
     research: false,
-    goal: `Email 5 — PATTERN INTERRUPT (reply in thread, one-liner).
-This email should be extremely short — 2-3 sentences maximum. 
-After four substantive emails, a jarring change in length and tone gets noticed.
-Something like: "Still worth 20 minutes? I can show you exactly how this would work 
-at a company your size — no pitch deck, just numbers." 
-That's it. Nothing else. No stats, no recap, no apology for following up.`
+    goal: `Email 5 — PATTERN INTERRUPT. Two to three sentences maximum after four longer emails. Something like: still worth 20 minutes? I can show you exactly how this would work at a company your size no pitch deck just numbers. That is it nothing else.`
   },
   {
     day: 25,
     subject: null,
     research: false,
-    goal: `Email 6 — THE REFERRAL ASK (reply in thread, change tactic entirely).
-Stop asking them for a meeting. Ask for the RIGHT person instead.
-Something like: if benefits decisions don't sit with them, who should you be talking to —
-the CFO, the HR director, the benefits manager? 
-Frame it as: you don't want to keep interrupting their day if there's a better person to speak with.
-Friendly, not passive-aggressive. This often gets routed to the decision-maker 
-even when the original prospect wasn't.`
+    goal: `Email 6 — THE REFERRAL ASK. Stop asking for the meeting. Ask for the right person instead. If benefits decisions do not sit with them who should you be talking to. CFO HR director benefits manager. Frame it as you do not want to keep interrupting their day if there is a better person to speak with.`
   },
   {
     day: 30,
     subject: null,
     research: false,
-    goal: `Email 7 — THE BREAKUP (reply in thread — this is your highest reply-rate email).
-This is the most important email in the sequence. Write it carefully.
-It should feel genuinely human and slightly self-aware. 
-Something like: "I've reached out a few times now and haven't heard back — 
-totally understand if the timing is off or this just isn't a priority right now.
-Should I stop reaching out?"
-That's essentially it. Maybe one warm sentence at the end leaving the door open.
-Do NOT be passive-aggressive. Do NOT list your features again. Do NOT apologize excessively.
-The power of this email is its honesty and brevity. People feel compelled to respond.`
+    goal: `Email 7 — THE BREAKUP. Most important email in the sequence. Genuine and slightly self aware. Something like: ive reached out a few times and havent heard back which is completely fine. should i stop reaching out? just want to make sure im not being annoying if the timings just off. That is essentially it. No features no recap no apology. Keep it honest and brief.`
   },
   {
     day: 35,
     subject: null,
     research: false,
-    goal: `Email 8 — THE WARM CLOSE (reply in thread, final email).
-Final email — warm, no pressure, genuinely respectful of their time.
-Let them know you won't keep reaching out after this.
-Something like: whenever the benefits conversation does come up at {{company}}, 
-you'd love to be a resource — even if it's just a sounding board.
-Leave a door genuinely open without any expectation.
-This is your last impression. Make it a good one.`
+    goal: `Email 8 — THE WARM CLOSE. Final email warm no pressure. Let them know you wont keep reaching out. Whenever the benefits conversation comes up you would love to be a resource even just a sounding board no agenda. Leave the door genuinely open. Good last impression.`
   }
 ];
 
 // -------------------------------------------------------------------
-// CONFIGURATION
+// CONFIG
 // -------------------------------------------------------------------
 const CONFIG = {
-  senderName: process.env.SENDER_NAME || "Your Name",
-  senderCompany: process.env.SENDER_COMPANY || "Your Company",
-  senderTitle: process.env.SENDER_TITLE || "Your Title",
+  senderName: process.env.SENDER_NAME || "Seth Christensen",
+  senderCompany: process.env.SENDER_COMPANY || "The PHMP",
 };
 
 // -------------------------------------------------------------------
@@ -206,7 +149,7 @@ const hubspotHeaders = {
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // -------------------------------------------------------------------
-// HELPER: Days since a date
+// HELPERS
 // -------------------------------------------------------------------
 function daysSince(dateString) {
   if (!dateString) return 999;
@@ -215,9 +158,6 @@ function daysSince(dateString) {
   return Math.floor((now - then) / (1000 * 60 * 60 * 24));
 }
 
-// -------------------------------------------------------------------
-// HELPER: Fill subject line placeholders
-// -------------------------------------------------------------------
 function fillTemplate(template, contact) {
   if (!template) return null;
   return template
@@ -226,23 +166,13 @@ function fillTemplate(template, contact) {
 }
 
 // -------------------------------------------------------------------
-// STEP 1a: Find new contacts synced from Apollo in the last 24 hours
-// and auto-enroll them into the sequence (sets sequence_active = true)
-// Apollo contacts come in with hs_analytics_source = "OTHER" and
-// hs_analytics_source_data_1 containing "apollo" — we also catch any
-// contact created in the last 24hrs with no sequence_active set yet.
+// STEP 1: Auto-enroll new contacts owned by Seth with blank sequence
 // -------------------------------------------------------------------
 async function enrollNewApolloContacts() {
   console.log("🔍 Checking for new contacts owned by Seth to enroll...");
 
-  // Step 1: Get Seth's HubSpot owner ID from his email
-  // Seth's HubSpot owner ID — hardcoded for reliability
   const ownerId = "161753897";
-  console.log(`  Using owner ID: ${ownerId}`);
 
-  // Step 2: Search for contacts owned by Seth with blank sequence_active.
-  // Existing contacts are protected because we already bulk-set them to false.
-  // Only brand new contacts from Apollo will have a blank sequence_active.
   const response = await fetch(
     "https://api.hubapi.com/crm/v3/objects/contacts/search",
     {
@@ -252,19 +182,12 @@ async function enrollNewApolloContacts() {
         filterGroups: [
           {
             filters: [
-              {
-                propertyName: "hubspot_owner_id",
-                operator: "EQ",
-                value: ownerId,
-              },
-              {
-                propertyName: "sequence_active",
-                operator: "NOT_HAS_PROPERTY",
-              },
+              { propertyName: "hubspot_owner_id", operator: "EQ", value: ownerId },
+              { propertyName: "sequence_active", operator: "NOT_HAS_PROPERTY" },
             ],
           },
         ],
-        properties: ["firstname", "lastname", "email", "company", "sequence_active", "sequence_step"],
+        properties: ["firstname", "lastname", "email", "company", "sequence_active"],
         limit: 100,
       }),
     }
@@ -272,50 +195,30 @@ async function enrollNewApolloContacts() {
 
   const data = await response.json();
 
-  // Debug: show raw response so we can see what's coming back
-  console.log(`  Search response: ${JSON.stringify(data).substring(0, 300)}`);
-
   if (!data.results || data.results.length === 0) {
     console.log("  No new contacts to enroll");
     return;
   }
 
-  console.log(`  Found ${data.results.length} contact(s) owned by Seth to enroll`);
+  console.log(`  Found ${data.results.length} new contact(s) to enroll`);
 
   for (const contact of data.results) {
-    if (!contact.properties.email) {
-      console.log(`  Skipping ${contact.id} — no email address`);
-      continue;
-    }
+    if (!contact.properties.email) continue;
 
-    await fetch(
-      `https://api.hubapi.com/crm/v3/objects/contacts/${contact.id}`,
-      {
-        method: "PATCH",
-        headers: hubspotHeaders,
-        body: JSON.stringify({
-          properties: {
-            sequence_active: "true",
-            sequence_step: "0",
-          },
-        }),
-      }
-    );
+    await fetch(`https://api.hubapi.com/crm/v3/objects/contacts/${contact.id}`, {
+      method: "PATCH",
+      headers: hubspotHeaders,
+      body: JSON.stringify({
+        properties: { sequence_active: "true", sequence_step: "0" },
+      }),
+    });
 
-    console.log(
-      `  Enrolled: ${contact.properties.firstname || ""} ${contact.properties.lastname || ""} @ ${contact.properties.company || "unknown"}`
-    );
+    console.log(`  Enrolled: ${contact.properties.firstname || ""} ${contact.properties.lastname || ""} @ ${contact.properties.company || "unknown"}`);
   }
 }
 
 // -------------------------------------------------------------------
-// STEP 1b: Fetch all currently active prospects from HubSpot
-// Custom properties needed on your HubSpot contacts:
-//   sequence_active  (single-line text: "true" or "false")
-//   sequence_step    (number: 0 through 8)
-//   last_email_sent  (date)
-//   thread_id        (single-line text: Outlook message ID for threading)
-//   thread_subject   (single-line text: subject line of email 1)
+// STEP 2: Fetch active prospects from HubSpot
 // -------------------------------------------------------------------
 async function getActiveProspects() {
   console.log("📋 Fetching active prospects from HubSpot...");
@@ -329,11 +232,7 @@ async function getActiveProspects() {
         filterGroups: [
           {
             filters: [
-              {
-                propertyName: "sequence_active",
-                operator: "EQ",
-                value: "true",
-              },
+              { propertyName: "sequence_active", operator: "EQ", value: "true" },
             ],
           },
         ],
@@ -349,10 +248,7 @@ async function getActiveProspects() {
   );
 
   const data = await response.json();
-  if (!data.results) {
-    console.log("No prospects found or HubSpot error:", data);
-    return [];
-  }
+  if (!data.results) return [];
 
   return data.results.map((c) => ({
     id: c.id,
@@ -373,7 +269,7 @@ async function getActiveProspects() {
 }
 
 // -------------------------------------------------------------------
-// STEP 2: Research the prospect's company
+// STEP 3: Research the prospect's company
 // -------------------------------------------------------------------
 async function researchCompany(contact) {
   if (!contact.company) return "No company name available.";
@@ -391,27 +287,15 @@ async function researchCompany(contact) {
         model: "claude-sonnet-4-6",
         max_tokens: 500,
         tools: [{ type: "web_search_20250305", name: "web_search" }],
-        messages: [
-          {
-            role: "user",
-            content: `Search for recent news about the company "${contact.company}"
-(located in ${contact.city || ""} ${contact.state || ""}, industry: ${contact.industry || "unknown"}).
-
-Find: recent news, expansions, new locations, hiring trends, funding rounds, 
-leadership changes, layoffs, or any signs relevant to an HR/benefits conversation.
-
-Return ONLY 2-3 sentences of plain text summarising what you found.
-If nothing useful, return exactly: "No notable recent news found."`,
-          },
-        ],
+        messages: [{
+          role: "user",
+          content: `Search for recent news about the company "${contact.company}" located in ${contact.city || ""} ${contact.state || ""} industry ${contact.industry || "unknown"}. Find recent news expansions hiring funding leadership changes or anything relevant to an HR or benefits conversation. Return ONLY 2 to 3 sentences of plain text. If nothing useful return exactly: No notable recent news found.`,
+        }],
       }),
     });
 
     const data = await response.json();
-
-    if (!data.content || !Array.isArray(data.content)) {
-      return "No notable recent news found.";
-    }
+    if (!data.content || !Array.isArray(data.content)) return "No notable recent news found.";
 
     const text = data.content
       .filter((b) => b && b.type === "text")
@@ -428,7 +312,7 @@ If nothing useful, return exactly: "No notable recent news found."`,
 }
 
 // -------------------------------------------------------------------
-// STEP 3: Write the email with Claude
+// STEP 4: Write email with Claude
 // -------------------------------------------------------------------
 async function writeEmail(contact, step, companyResearch) {
   const emailDef = SEQUENCE[step];
@@ -437,7 +321,6 @@ async function writeEmail(contact, step, companyResearch) {
   const isReply = step > 0;
   const prompt = `${PHMP_BRIEFING}
 
----
 PROSPECT DETAILS:
 - Name: ${contact.firstName} ${contact.lastName}
 - Title: ${contact.jobTitle || "unknown"}
@@ -446,27 +329,26 @@ PROSPECT DETAILS:
 - Location: ${contact.city || ""} ${contact.state || ""}
 - Company size: ${contact.employeeCount ? contact.employeeCount + " employees" : "unknown"}
 
-RECENT COMPANY RESEARCH (use only if genuinely relevant — never force it):
+RECENT COMPANY RESEARCH (use only if genuinely relevant):
 ${companyResearch}
 
----
 CONTEXT:
 ${isReply
-  ? `This is email ${step + 1} in an ongoing thread. You have already sent ${step} previous email(s) to this person with no reply. Do NOT re-introduce yourself. Do NOT reference being in a thread explicitly. Just write naturally as though continuing a real conversation by email.`
-  : `This is the very first email. Introduce yourself briefly and naturally.`
-}
+    ? `This is email ${step + 1} in an ongoing thread. You have sent ${step} previous email(s) with no reply. Do NOT re-introduce yourself. Write naturally as though continuing a real conversation.`
+    : `This is the very first email. Introduce yourself briefly and naturally.`
+  }
 
 YOUR TASK:
 ${fillTemplate(emailDef.goal, contact)}
 
 FORMATTING:
 - Start with: "Hi ${contact.firstName},"
-- Write the entire body as one single paragraph. no line breaks between sentences. no gaps. just one flowing block of text.
+- Write the entire body as one single paragraph. no line breaks between sentences.
 - End with exactly this on a new line: Seth Christensen | The PHMP
 - No subject line, no bullet points, no bold, no dashes, no hyphens, no symbols
-- Under 60 words total in the body. shorter is better.
+- Under 60 words in the body
 - Do not capitalize the first word of the body after the greeting
-- Loose contractions are good. "thats" "youre" "ill" "dont" are fine.`;
+- Loose contractions are good: "thats" "youre" "ill" "dont"`;
 
   const response = await claude.messages.create({
     model: "claude-sonnet-4-6",
@@ -474,105 +356,152 @@ FORMATTING:
     messages: [{ role: "user", content: prompt }],
   });
 
-  let body = response.content[0].text;
-  body = body.replace(
-    "Seth Christensen | The PHMP",
-    "Seth Christensen | The PHMP"
-  );
-
-  // Clean up any leftover signature placeholders just in case
-  body = body.replace("[SIGNATURE]", "Seth Christensen | The PHMP");
-
-  return body;
+  return response.content[0].text;
 }
 
 // -------------------------------------------------------------------
-// STEP 4: Get Microsoft Outlook token
+// STEP 5: Get Microsoft Outlook token
 // -------------------------------------------------------------------
-async function testHubSpotConnection() {
-  // Simple check that our HubSpot key works before we start sending
-  const res = await fetch("https://api.hubapi.com/crm/v3/objects/contacts?limit=1", {
-    headers: hubspotHeaders,
+async function getOutlookToken() {
+  const url = `https://login.microsoftonline.com/${process.env.MICROSOFT_TENANT_ID}/oauth2/v2.0/token`;
+  const body = new URLSearchParams({
+    client_id: process.env.MICROSOFT_CLIENT_ID,
+    client_secret: process.env.MICROSOFT_CLIENT_SECRET,
+    scope: "https://graph.microsoft.com/.default",
+    grant_type: "client_credentials",
   });
-  if (!res.ok) {
-    throw new Error("HubSpot connection failed: " + res.status);
-  }
-  return true;
-}
 
-
-// -------------------------------------------------------------------
-// STEP 5: Send email via HubSpot (uses your connected Outlook account)
-// Email 1 sends fresh. Emails 2-8 reply in the same thread using
-// HubSpot's in_reply_to field to keep the conversation threaded.
-// -------------------------------------------------------------------
-async function sendViaHubSpot(contact, subject, body, inReplyToId) {
-  const senderEmail = process.env.SENDER_EMAIL;
-
-  // HubSpot requires sender/recipient info inside hs_email_headers as JSON
-  const headers = {
-    from: {
-      email: senderEmail,
-      firstName: process.env.SENDER_NAME || "Seth",
-      lastName: "",
-    },
-    to: [
-      {
-        email: contact.email,
-        firstName: contact.firstName || "",
-        lastName: contact.lastName || "",
-      },
-    ],
-    cc: [],
-    bcc: [],
-  };
-
-  const properties = {
-    hs_email_direction: "EMAIL",
-    hs_email_subject: subject,
-    hs_email_text: body,
-    hs_email_status: "SENT",
-    hs_timestamp: String(Date.now()),
-    hs_email_headers: JSON.stringify(headers),
-  };
-
-  if (inReplyToId) {
-    properties.hs_email_thread_id = String(inReplyToId);
-  }
-
-  const emailPayload = {
-    properties,
-    associations: [
-      {
-        to: { id: contact.id },
-        types: [
-          {
-            associationCategory: "HUBSPOT_DEFINED",
-            associationTypeId: 198,
-          },
-        ],
-      },
-    ],
-  };
-
-  const res = await fetch("https://api.hubapi.com/crm/v3/objects/emails", {
+  const res = await fetch(url, {
     method: "POST",
-    headers: hubspotHeaders,
-    body: JSON.stringify(emailPayload),
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: body.toString(),
   });
 
   const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(`HubSpot send failed: ${JSON.stringify(data)}`);
+  if (!data.access_token) {
+    throw new Error("Outlook auth failed: " + JSON.stringify(data));
   }
-
-  console.log(`  📧 Email sent via HubSpot (id: ${data.id})`);
-  return data.id;
+  return data.access_token;
 }
 
 // -------------------------------------------------------------------
-// STEP 6: Update HubSpot — new step + thread info + log email
+// STEP 6a: Send Email 1 — fresh thread, capture Message-ID
+// -------------------------------------------------------------------
+async function sendFirstEmail(token, contact, subject, body) {
+  const senderEmail = process.env.SENDER_EMAIL;
+
+  const sendRes = await fetch(
+    `https://graph.microsoft.com/v1.0/users/${senderEmail}/sendMail`,
+    {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: {
+          subject,
+          body: { contentType: "Text", content: body },
+          toRecipients: [{ emailAddress: { address: contact.email } }],
+        },
+        saveToSentItems: true,
+      }),
+    }
+  );
+
+  if (sendRes.status !== 202) {
+    throw new Error(`Send failed: ${await sendRes.text()}`);
+  }
+
+  // Wait then fetch the Message-ID for threading
+  await new Promise((r) => setTimeout(r, 3000));
+
+  const searchRes = await fetch(
+    `https://graph.microsoft.com/v1.0/users/${senderEmail}/mailFolders/SentItems/messages?$filter=subject eq '${encodeURIComponent(subject)}'&$orderby=sentDateTime desc&$top=1&$select=id,internetMessageId`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+
+  const searchData = await searchRes.json();
+  const sentMsg = searchData.value?.[0];
+
+  if (!sentMsg) {
+    console.log("  ⚠️  Could not retrieve Message-ID — threading may not work");
+    return null;
+  }
+
+  console.log(`  📧 Email 1 sent | Thread ID captured`);
+  return sentMsg.internetMessageId;
+}
+
+// -------------------------------------------------------------------
+// STEP 6b: Send follow-up — reply in existing thread
+// -------------------------------------------------------------------
+async function sendReplyEmail(token, contact, body, threadInternetMessageId, threadSubject) {
+  const senderEmail = process.env.SENDER_EMAIL;
+
+  const findRes = await fetch(
+    `https://graph.microsoft.com/v1.0/users/${senderEmail}/messages?$filter=internetMessageId eq '${encodeURIComponent(threadInternetMessageId)}'&$select=id`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+
+  const findData = await findRes.json();
+  const originalMsg = findData.value?.[0];
+
+  if (originalMsg) {
+    const replyRes = await fetch(
+      `https://graph.microsoft.com/v1.0/users/${senderEmail}/messages/${originalMsg.id}/createReply`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      }
+    );
+
+    const replyMsg = await replyRes.json();
+    if (!replyMsg.id) throw new Error("Could not create reply draft");
+
+    await fetch(
+      `https://graph.microsoft.com/v1.0/users/${senderEmail}/messages/${replyMsg.id}`,
+      {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          body: { contentType: "Text", content: body },
+          toRecipients: [{ emailAddress: { address: contact.email } }],
+        }),
+      }
+    );
+
+    await fetch(
+      `https://graph.microsoft.com/v1.0/users/${senderEmail}/messages/${replyMsg.id}/send`,
+      { method: "POST", headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    console.log(`  📧 Reply sent in thread`);
+  } else {
+    // Fallback: send with Re: subject
+    const reSubject = threadSubject?.startsWith("Re: ") ? threadSubject : `Re: ${threadSubject}`;
+
+    const fallbackRes = await fetch(
+      `https://graph.microsoft.com/v1.0/users/${senderEmail}/sendMail`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: {
+            subject: reSubject,
+            body: { contentType: "Text", content: body },
+            toRecipients: [{ emailAddress: { address: contact.email } }],
+          },
+          saveToSentItems: true,
+        }),
+      }
+    );
+
+    if (fallbackRes.status !== 202) throw new Error(`Fallback send failed: ${await fallbackRes.text()}`);
+    console.log(`  📧 Reply sent (fallback)`);
+  }
+}
+
+// -------------------------------------------------------------------
+// STEP 7: Update HubSpot — step + thread info + log email
 // -------------------------------------------------------------------
 async function updateHubSpot(contact, emailBody, subject, newStep, threadId, threadSubject) {
   const now = new Date().toISOString().split("T")[0];
@@ -584,22 +513,18 @@ async function updateHubSpot(contact, emailBody, subject, newStep, threadId, thr
     sequence_active: isComplete ? "false" : "true",
   };
 
-  // Save thread info on first email so all future emails can reply in thread
   if (newStep === 1 && threadId) {
     updates.thread_id = threadId;
     updates.thread_subject = subject;
   }
 
-  await fetch(
-    `https://api.hubapi.com/crm/v3/objects/contacts/${contact.id}`,
-    {
-      method: "PATCH",
-      headers: hubspotHeaders,
-      body: JSON.stringify({ properties: updates }),
-    }
-  );
+  await fetch(`https://api.hubapi.com/crm/v3/objects/contacts/${contact.id}`, {
+    method: "PATCH",
+    headers: hubspotHeaders,
+    body: JSON.stringify({ properties: updates }),
+  });
 
-  // Log the email as an engagement on the contact timeline
+  // Log email in HubSpot timeline
   await fetch("https://api.hubapi.com/crm/v3/objects/emails", {
     method: "POST",
     headers: hubspotHeaders,
@@ -611,23 +536,14 @@ async function updateHubSpot(contact, emailBody, subject, newStep, threadId, thr
         hs_email_text: emailBody,
         hs_timestamp: Date.now(),
       },
-      associations: [
-        {
-          to: { id: contact.id },
-          types: [
-            {
-              associationCategory: "HUBSPOT_DEFINED",
-              associationTypeId: 198,
-            },
-          ],
-        },
-      ],
+      associations: [{
+        to: { id: contact.id },
+        types: [{ associationCategory: "HUBSPOT_DEFINED", associationTypeId: 198 }],
+      }],
     }),
   });
 
-  console.log(
-    `  ✅ HubSpot updated (step ${newStep}${isComplete ? " — sequence complete" : ""})`
-  );
+  console.log(`  ✅ HubSpot updated (step ${newStep}${isComplete ? " — sequence complete" : ""})`);
 }
 
 // -------------------------------------------------------------------
@@ -637,37 +553,33 @@ async function main() {
   console.log("\n🚀 PHMP Sales Email Sequencer\n");
   console.log(`📅 ${new Date().toDateString()}\n`);
 
-  // Wait a random amount of time between 0 and 3 hours before doing anything
-  // This spreads the start time across the 9am-12pm window so it never
-  // kicks off at the exact same moment every day
-  // Skip the delay if running manually via workflow_dispatch (useful for testing)
   const isManualRun = process.env.GITHUB_EVENT_NAME === "workflow_dispatch";
   if (!isManualRun) {
     const randomStartDelay = Math.floor(Math.random() * 3 * 60 * 60 * 1000);
     const startMins = Math.round(randomStartDelay / 60000);
-    console.log(`⏱  Random start delay: ${Math.floor(startMins/60)}h ${startMins%60}m — emails will begin around ${new Date(Date.now() + randomStartDelay).toLocaleTimeString("en-US", {timeZone: "America/Denver", hour: "2-digit", minute: "2-digit"})} MT\n`);
+    console.log(`⏱  Random start delay: ${Math.floor(startMins / 60)}h ${startMins % 60}m\n`);
     await new Promise((r) => setTimeout(r, randomStartDelay));
   } else {
     console.log("Manual run detected — skipping random delay\n");
   }
 
   try {
-    console.log("🔑 Connecting to HubSpot...");
-    await testHubSpotConnection();
+    console.log("🔑 Authenticating with Outlook...");
+    const token = await getOutlookToken();
     console.log("  ✅ Connected\n");
 
-    // Auto-enroll any new contacts synced from Apollo in the last 24hrs
+    // Auto-enroll new contacts owned by Seth
     await enrollNewApolloContacts();
     console.log("");
 
-    // Wait for HubSpot to index newly enrolled contacts
+    // Small pause so HubSpot indexes newly enrolled contacts
     await new Promise((r) => setTimeout(r, 5000));
 
     const prospects = await getActiveProspects();
     console.log(`  Found ${prospects.length} active prospect(s)\n`);
 
     if (prospects.length === 0) {
-      console.log("No prospects to email. Add contacts in HubSpot with sequence_active = true and sequence_step = 0");
+      console.log("No prospects to email today.");
       return;
     }
 
@@ -677,7 +589,6 @@ async function main() {
     for (const contact of prospects) {
       const step = contact.sequenceStep;
 
-      // Sequence complete
       if (step >= SEQUENCE.length) {
         console.log(`⏭️  ${contact.firstName} ${contact.lastName} — sequence complete`);
         skipped++;
@@ -686,14 +597,11 @@ async function main() {
 
       const emailDef = SEQUENCE[step];
 
-      // Not time yet for this step
       if (step > 0) {
         const daysWaited = daysSince(contact.lastEmailSent);
         const daysNeeded = emailDef.day - SEQUENCE[step - 1].day;
         if (daysWaited < daysNeeded) {
-          console.log(
-            `⏳ ${contact.firstName} ${contact.lastName} — waiting (${daysWaited}/${daysNeeded} days until email ${step + 1})`
-          );
+          console.log(`⏳ ${contact.firstName} ${contact.lastName} — waiting (${daysWaited}/${daysNeeded} days until email ${step + 1})`);
           skipped++;
           continue;
         }
@@ -703,35 +611,25 @@ async function main() {
       console.log(`   Email ${step + 1}/8 (Day ${emailDef.day})`);
 
       try {
-        // Research (only for steps that need it)
         let research = "No research for this step.";
-        if (emailDef.research) {
-          research = await researchCompany(contact);
-        }
+        if (emailDef.research) research = await researchCompany(contact);
 
-        // Write the email
         const body = await writeEmail(contact, step, research);
         const subject = fillTemplate(emailDef.subject, contact);
 
         if (step === 0) {
-          // First email — send fresh, save HubSpot email ID for threading
-          const emailId = await sendViaHubSpot(contact, subject, body, null);
-          await updateHubSpot(contact, body, subject, step + 1, emailId, subject);
+          const threadId = await sendFirstEmail(token, contact, subject, body);
+          await updateHubSpot(contact, body, subject, step + 1, threadId, subject);
         } else {
-          // All follow-ups — reply in the original thread via HubSpot
-          const reSubject = contact.threadSubject
-            ? `Re: ${contact.threadSubject}`
-            : `Re: quick question`;
-          await sendViaHubSpot(contact, reSubject, body, contact.threadId);
+          const threadSubject = contact.threadSubject || `quick question`;
+          await sendReplyEmail(token, contact, body, contact.threadId, threadSubject);
           await updateHubSpot(contact, body, null, step + 1, null, null);
         }
 
         sent++;
 
-        // Wait a random amount between 4 and 18 minutes before the next email
-        // so each one lands at a different time rather than all at once
         const randomDelay = Math.floor(Math.random() * (18 - 4 + 1) + 4) * 60 * 1000;
-        console.log(`  ⏱  Waiting ${Math.round(randomDelay/60000)} min before next email...`);
+        console.log(`  ⏱  Waiting ${Math.round(randomDelay / 60000)} min before next email...`);
         await new Promise((r) => setTimeout(r, randomDelay));
       } catch (err) {
         console.error(`  ❌ Error for ${contact.firstName}: ${err.message}`);
