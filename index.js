@@ -235,7 +235,9 @@ function fillTemplate(template, contact) {
 async function enrollNewApolloContacts() {
   console.log("🔍 Checking for new Apollo contacts to enroll...");
 
-  const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  // Use 7 days lookback so existing Apollo contacts get caught during testing
+  // Change back to 24 * 60 * 60 * 1000 (24 hours) once confirmed working
+  const yesterday = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
   // Apollo syncs contacts with these exact HubSpot source values:
   //   hs_analytics_source         = "Offline sources"  (display) / "OFFLINE" (API)
@@ -257,7 +259,7 @@ async function enrollNewApolloContacts() {
                 value: yesterday,
               },
               {
-                propertyName: "hs_analytics_source_data_2",
+                propertyName: "hs_latest_source_data_2",
                 operator: "EQ",
                 value: "Apollo Integration",
               },
@@ -276,7 +278,7 @@ async function enrollNewApolloContacts() {
                 value: yesterday,
               },
               {
-                propertyName: "hs_analytics_source_data_2",
+                propertyName: "hs_latest_source_data_2",
                 operator: "EQ",
                 value: "Apollo Integration",
               },
@@ -290,8 +292,8 @@ async function enrollNewApolloContacts() {
         ],
         properties: [
           "firstname", "lastname", "email", "company",
-          "hs_analytics_source", "hs_analytics_source_data_1",
-          "hs_analytics_source_data_2",
+          "hs_latest_source", "hs_latest_source_data_1",
+          "hs_latest_source_data_2",
         ],
         limit: 100,
       }),
