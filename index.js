@@ -545,19 +545,39 @@ async function testHubSpotConnection() {
 async function sendViaHubSpot(contact, subject, body, inReplyToId) {
   const senderEmail = process.env.SENDER_EMAIL;
 
-  const emailPayload = {
-    properties: {
-      hs_email_direction: "EMAIL",
-      hs_email_subject: subject,
-      hs_email_text: body,
-      hs_email_status: "SENT",
-      hs_timestamp: Date.now(),
-      hs_email_from_email: senderEmail,
-      hs_email_from_firstname: process.env.SENDER_NAME || "Seth",
-      hs_email_to_email: contact.email,
-      hs_email_to_firstname: contact.firstName,
-      hs_email_to_lastname: contact.lastName,
+  // HubSpot requires sender/recipient info inside hs_email_headers as JSON
+  const headers = {
+    from: {
+      email: senderEmail,
+      firstName: process.env.SENDER_NAME || "Seth",
+      lastName: "",
     },
+    to: [
+      {
+        email: contact.email,
+        firstName: contact.firstName || "",
+        lastName: contact.lastName || "",
+      },
+    ],
+    cc: [],
+    bcc: [],
+  };
+
+  const properties = {
+    hs_email_direction: "EMAIL",
+    hs_email_subject: subject,
+    hs_email_text: body,
+    hs_email_status: "SENT",
+    hs_timestamp: String(Date.now()),
+    hs_email_headers: JSON.stringify(headers),
+  };
+
+  if (inReplyToId) {
+    properties.hs_email_thread_id = String(inReplyToId);
+  }
+
+  const emailPayload = {
+    properties,
     associations: [
       {
         to: { id: contact.id },
@@ -570,11 +590,6 @@ async function sendViaHubSpot(contact, subject, body, inReplyToId) {
       },
     ],
   };
-
-  // If this is a follow-up, attach it to the original thread
-  if (inReplyToId) {
-    emailPayload.properties.hs_email_in_reply_to_id = inReplyToId;
-  }
 
   const res = await fetch("https://api.hubapi.com/crm/v3/objects/emails", {
     method: "POST",
