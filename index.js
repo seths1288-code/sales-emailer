@@ -236,36 +236,9 @@ async function enrollNewApolloContacts() {
   console.log("🔍 Checking for new contacts owned by Seth to enroll...");
 
   // Step 1: Get Seth's HubSpot owner ID from his email
-  // Try fetching all owners and find Seth by email
-  const ownerRes = await fetch(
-    `https://api.hubapi.com/crm/v3/owners?limit=100`,
-    { headers: hubspotHeaders }
-  );
-
-  const ownerData = await ownerRes.json();
-
-  if (!ownerData.results || ownerData.results.length === 0) {
-    console.log(`  Owner lookup failed: ${JSON.stringify(ownerData)}`);
-    return;
-  }
-
-  // Log all owners so we can see what's there
-  console.log(`  Found ${ownerData.results.length} owner(s):`);
-  ownerData.results.forEach(o => {
-    console.log(`    ID: ${o.id} | Email: ${o.email} | Name: ${o.firstName} ${o.lastName}`);
-  });
-
-  const owner = ownerData.results.find(o =>
-    o.email && o.email.toLowerCase() === (process.env.SENDER_EMAIL || "").toLowerCase()
-  );
-
-  if (!owner) {
-    console.log(`  Could not find owner matching ${process.env.SENDER_EMAIL}`);
-    return;
-  }
-
-  const ownerId = owner.id;
-  console.log(`  Found owner ID: ${ownerId}`);
+  // Seth's HubSpot owner ID — hardcoded for reliability
+  const ownerId = "161753897";
+  console.log(`  Using owner ID: ${ownerId}`);
 
   // Step 2: Search for contacts owned by Seth with blank sequence_active.
   // Existing contacts are protected because we already bulk-set them to false.
@@ -312,6 +285,9 @@ async function enrollNewApolloContacts() {
   );
 
   const data = await response.json();
+
+  // Debug: show raw response so we can see what's coming back
+  console.log(`  Search response: ${JSON.stringify(data).substring(0, 300)}`);
 
   if (!data.results || data.results.length === 0) {
     console.log("  No new contacts to enroll");
