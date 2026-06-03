@@ -424,7 +424,7 @@ async function researchCompany(contact) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: "claude-sonnet-4-6",
         max_tokens: 500,
         tools: [{ type: "web_search_20250305", name: "web_search" }],
         messages: [
@@ -444,8 +444,13 @@ If nothing useful, return exactly: "No notable recent news found."`,
     });
 
     const data = await response.json();
+
+    if (!data.content || !Array.isArray(data.content)) {
+      return "No notable recent news found.";
+    }
+
     const text = data.content
-      .filter((b) => b.type === "text")
+      .filter((b) => b && b.type === "text")
       .map((b) => b.text)
       .join(" ")
       .trim();
@@ -500,7 +505,7 @@ FORMATTING:
 - Loose contractions are good. "thats" "youre" "ill" "dont" are fine.`;
 
   const response = await claude.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-sonnet-4-6",
     max_tokens: 400,
     messages: [{ role: "user", content: prompt }],
   });
