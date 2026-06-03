@@ -233,17 +233,28 @@ function fillTemplate(template, contact) {
 // contact created in the last 24hrs with no sequence_active set yet.
 // -------------------------------------------------------------------
 async function enrollNewApolloContacts() {
-  console.log("🔍 Checking for new Apollo contacts to enroll...");
+  console.log("🔍 Checking for new contacts owned by Seth to enroll...");
 
-  // Use 7 days lookback so existing Apollo contacts get caught during testing
-  // Change back to 24 * 60 * 60 * 1000 (24 hours) once confirmed working
-  const yesterday = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  // Step 1: Get Seth's HubSpot owner ID from his email
+  const ownerRes = await fetch(
+    `https://api.hubapi.com/crm/v3/owners?email=${encodeURIComponent(process.env.SENDER_EMAIL)}&limit=1`,
+    { headers: hubspotHeaders }
+  );
 
-  // We use TWO filters combined to safely identify Apollo contacts:
-  // 1. Created in last 24 hours
-  // 2. hs_object_source_label contains "INTEGRATION" (Apollo syncs as an integration)
-  // 3. sequence_active is blank (not yet enrolled)
-  // This prevents contacts added manually by teammates from entering the sequence.
+  const ownerData = await ownerRes.json();
+
+  if (!ownerData.results || ownerData.results.length === 0) {
+    console.log(`  Could not find HubSpot owner for ${process.env.SENDER_EMAIL}`);
+    return;
+  }
+
+  const ownerId = ownerData.results[0].id;
+  console.log(`  Found owner ID: ${ownerId}`);
+
+  // Step 2: Search for contacts owned by Seth, created in last 24 hours,
+  // with no sequence_active set yet — so existing contacts are never touched
+  const last24hrs = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
   const response = await fetch(
     "https://api.hubapi.com/crm/v3/objects/contacts/search",
     {
@@ -254,14 +265,14 @@ async function enrollNewApolloContacts() {
           {
             filters: [
               {
-                propertyName: "createdate",
-                operator: "GTE",
-                value: yesterday,
+                propertyName: "hubspot_owner_id",
+                operator: "EQ",
+                value: ownerId,
               },
               {
-                propertyName: "hs_object_source",
-                operator: "EQ",
-                value: "INTEGRATION",
+                propertyName: "createdate",
+                operator: "GTE",
+                value: last24hrs,
               },
               {
                 propertyName: "sequence_active",
@@ -272,14 +283,14 @@ async function enrollNewApolloContacts() {
           {
             filters: [
               {
-                propertyName: "createdate",
-                operator: "GTE",
-                value: yesterday,
+                propertyName: "hubspot_owner_id",
+                operator: "EQ",
+                value: ownerId,
               },
               {
-                propertyName: "hs_object_source",
-                operator: "EQ",
-                value: "INTEGRATION",
+                propertyName: "createdate",
+                operator: "GTE",
+                value: last24hrs,
               },
               {
                 propertyName: "sequence_active",
@@ -289,42 +300,22 @@ async function enrollNewApolloContacts() {
             ],
           },
         ],
-        properties: [
-          "firstname", "lastname", "email", "company",
-          "hs_object_source", "hs_object_source_label",
-          "sequence_active", "sequence_step",
-        ],
+        properties: ["firstname", "lastname", "email", "company", "sequence_active", "sequence_step"],
         limit: 100,
       }),
     }
   );
 
   const data = await response.json();
-  
-  // Debug: log what we found so we can see the exact source values
-  if (data.results && data.results.length > 0) {
-    console.log(`  Found ${data.results.length} recent contact(s) — checking sources:`);
-    data.results.forEach(c => {
-      console.log(`    ${c.properties.firstname} ${c.properties.lastname}: source="${c.properties.hs_object_source}" label="${c.properties.hs_object_source_label}"`);
-    });
-  }
 
   if (!data.results || data.results.length === 0) {
-    console.log("  No new contacts found in last 7 days");
+    console.log("  No new contacts to enroll");
     return;
   }
 
-  // Enroll all recent contacts for now — we'll filter once we see the source values
-  const apolloContacts = data.results;
+  console.log(`  Found ${data.results.length} contact(s) owned by Seth to enroll`);
 
-  if (apolloContacts.length === 0) {
-    console.log("  No new Apollo contacts to enroll");
-    return;
-  }
-
-  console.log(`  Found ${apolloContacts.length} new Apollo contact(s) to enroll`);
-
-  for (const contact of apolloContacts) {
+  for (const contact of data.results) {
     if (!contact.properties.email) {
       console.log(`  Skipping ${contact.id} — no email address`);
       continue;
