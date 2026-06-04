@@ -95,7 +95,7 @@ and employees get 23 new benefits plus more take-home pay. worth 20 min to see t
 ======================================================================
 TONE AND STYLE — NON NEGOTIABLE:
 Write like a real person typing fast between meetings. Not a marketer. Not a salesperson.
-Under 60 words in the body. Under 40 is better for follow-ups.
+Under 50 words in the body. Under 35 is better for follow-ups. Email 3 can go up to 60.
 One flowing paragraph. No line breaks between sentences. No gaps.
 No bullet points, no bold, no dashes, no hyphens, no colons for effect, no em dashes.
 No symbols of any kind that make it look formatted or AI written.
@@ -118,11 +118,15 @@ const SEQUENCE = [
     research: true,
     goal: `Email 1 — THE RESEARCH-LED HOOK.
 Open with one specific genuine observation about their company from the research.
-If nothing useful, reference a known pain in their industry or company size around healthcare costs.
-Connect it to a single soft question — something like: "curious if managing healthcare costs
-is something youre actively working through right now or if youve found a way to get ahead of it."
-Do NOT mention the PHMP. Do NOT pitch anything. Just open a conversation.
-End with a soft ask for 20 minutes. Human, curious, no pressure.`
+If nothing useful reference a known pain in their industry or company size around healthcare.
+Connect it to a soft observation that most companies feel completely stuck with healthcare costs
+and the options are always the same bad ones — raise deductibles, shift cost to employees, absorb it.
+Then plant a single curiosity hook: something like "theres actually a way to reduce what you spend
+without touching anything you already have in place. thought it was too good to be true at first."
+End with a soft ask for 20 minutes to show them what it looks like for their company specifically.
+Do NOT explain the PHMP. Do NOT mention FICA or Section 125. Do NOT pitch anything.
+Just open a door. The hook is: reduce costs, nothing changes, sounds too good to be true but isnt.
+Human, curious, conversational. One flowing paragraph under 70 words.`
   },
   {
     day: 3,
@@ -152,7 +156,7 @@ without changing a single thing about their existing benefits.
 i know that sounds too good to be true. i thought the same thing when i first heard it.
 worth 20 minutes to see the actual math for your company?"
 That exact tone. Lean hard into "too good to be true but completely real."
-Keep it under 80 words but this one can be slightly longer than others because the mechanism needs to land.`
+Keep it under 65 words. The mechanism needs to land but brevity still wins.`
   },
   {
     day: 14,
