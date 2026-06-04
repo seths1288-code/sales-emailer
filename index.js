@@ -617,12 +617,15 @@ async function main() {
         const body = await writeEmail(contact, step, research);
         const subject = fillTemplate(emailDef.subject, contact);
 
+        // Refresh the Outlook token before each send to avoid expiry on long runs
+        const freshToken = await getOutlookToken();
+
         if (step === 0) {
-          const threadId = await sendFirstEmail(token, contact, subject, body);
+          const threadId = await sendFirstEmail(freshToken, contact, subject, body);
           await updateHubSpot(contact, body, subject, step + 1, threadId, subject);
         } else {
           const threadSubject = contact.threadSubject || `quick question`;
-          await sendReplyEmail(token, contact, body, contact.threadId, threadSubject);
+          await sendReplyEmail(freshToken, contact, body, contact.threadId, threadSubject);
           await updateHubSpot(contact, body, null, step + 1, null, null);
         }
 
