@@ -686,6 +686,14 @@ async function main() {
 
       const emailDef = SEQUENCE[step];
 
+      // Never send more than one email to the same person on the same day
+      const today = new Date().toISOString().split("T")[0];
+      if (contact.lastEmailSent === today) {
+        console.log(`⏭️  ${contact.firstName} ${contact.lastName} — already emailed today, skipping`);
+        skipped++;
+        continue;
+      }
+
       if (step > 0) {
         const daysWaited = daysSince(contact.lastEmailSent);
         const daysNeeded = emailDef.day - SEQUENCE[step - 1].day;
