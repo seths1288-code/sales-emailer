@@ -728,7 +728,7 @@ async function main() {
 
         sent++;
 
-        const randomDelay = Math.floor(Math.random() * (18 - 4 + 1) + 4) * 60 * 1000;
+        const randomDelay = Math.floor(Math.random() * (7 - 3 + 1) + 3) * 60 * 1000;
         console.log(`  ⏱  Waiting ${Math.round(randomDelay / 60000)} min before next email...`);
         await new Promise((r) => setTimeout(r, randomDelay));
       } catch (err) {
