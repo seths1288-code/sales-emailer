@@ -99,18 +99,32 @@ change anything they already have. That's counterintuitive enough to earn a repl
 
 ======================================================================
 TONE AND STYLE — NON NEGOTIABLE:
-Write like a real person typing fast between meetings. Not a marketer.
-Under 50 words in the body. Under 35 for follow-ups. Email 3 can go to 65.
-One flowing paragraph. No line breaks between sentences.
+Write like a real person typing fast on their phone between meetings. Not a marketer ever.
+Under 50 words maximum in the body. Under 35 for follow-ups. Email 3 can go to 55.
+One flowing paragraph. No line breaks between sentences whatsoever.
 No bullet points, no bold, no dashes, no hyphens, no colons for effect, no em dashes.
-No symbols that make it look formatted or AI written.
+No symbols of any kind that make it look formatted or AI written.
 Do not capitalize the first word after "Hi [Name],".
-Loose contractions: "thats" "youre" "ill" "dont" "ive" "havent".
-Never say: "synergy", "game changer", "revolutionary", "best in class", "solution", "leverage".
+Loose contractions always: "thats" "youre" "ill" "dont" "ive" "havent" — no apostrophes ever.
+Never say: "synergy", "game changer", "revolutionary", "best in class", "solution", "leverage", "streamline".
 Never say: "I hope this finds you well", "I wanted to reach out", "please do not hesitate".
 Never imply we replace anything. We sit alongside and add on top.
 Sign off always exactly: Seth Christensen | The PHMP
 Do NOT mention KBA.
+
+WHAT MAKES THESE EMAILS STAND OUT — APPLY ALL OF THESE:
+1. SPECIFICITY: Never say "healthcare costs." Say "what you spend keeping [X] employees covered"
+   or "the cost of running benefits across [their industry]." Specific details feel personal.
+2. CONFIDENT UNDERSTATEMENT: The less desperate the ask sounds the more they want to say yes.
+   "worth 20 minutes?" not "I would love to connect and share our solution."
+3. ONE UNEXPECTED LINE PER EMAIL: Every email needs one sentence nobody has said to them before.
+   Examples: "it pays you to offer it" / "your broker doesnt lose anything" /
+   "theres no catch i just know how it sounds" / "i know this sounds made up" /
+   "every other benefits conversation starts with a price tag, this one ends with savings."
+4. EMPATHY BEFORE PITCH: Show you understand their world before you say anything about the PHMP.
+   One sentence that proves you get their situation. Then the hook.
+5. NEVER EXPLAIN TOO MUCH: Say less than you want to. One point per email. Stop there.
+   The goal is curiosity not comprehension. They dont need to understand it to take the meeting.
 `;
 
 // -------------------------------------------------------------------
@@ -164,87 +178,81 @@ Under 65 words total. One paragraph. Human, direct, no hyphens, no symbols.`
     subject: null,
     research: false,
     goal: `Email 2 — THE CATEGORY REFRAME.
-Do not call this a benefits plan. Name what it actually is.
-Something like: "this isnt a benefits plan or anything your broker has probably shown you.
-its a tax structure built on IRS Section 125 that happens to come with 23 new employee benefits.
-the reason it costs nothing is that your FICA payroll taxes go down when employees enroll
-pre-tax and that savings covers the whole thing. most companies have never heard of this
-because its not sold through brokers. it just sits on top of whatever they already have."
-One soft question at the end. Under 55 words.`
+Different angle from email 1. No repeated points.
+Reframe what the PHMP actually is — not a benefits plan, a tax structure.
+One unexpected line: something like "every other benefits conversation starts with a price tag.
+this one ends with savings." or "theres no category for this yet."
+Show empathy for the trap they are in — same bad options every year.
+Then: "its not sold through brokers. it just sits on top of whatever they already have.
+nothing below it changes." One soft question. Under 50 words. One paragraph.`
   },
   {
     day: 7,
     subject: null,
     research: false,
-    goal: `Email 3 — THE FICA MATH MADE REAL.
-Make the numbers specific and impossible to ignore.
-Something like: "to put a real number on it — a company with 100 employees typically sees
-$32,000 to $45,000 in annual FICA tax savings. thats what covers the plan.
-on top of that theres an 11 to 17% reduction in medical spending confirmed across 5 independent
-studies. so a company spending $1M on healthcare could see $110,000 to $170,000 less in claims.
-all without changing a single thing about their existing coverage or broker relationship.
-i know this sounds too good to be true. every single client said the same thing before they
-saw the math. worth 20 minutes?"
-Under 65 words. This one can be slightly longer because the numbers need to land.`
+    goal: `Email 3 — THE FICA MATH.
+Make the numbers real and specific. Under 55 words.
+Something like: "a company with [their size or similar] employees typically sees
+$32,000 to $45,000 in annual payroll tax savings just from the structure of this plan.
+thats what covers the cost of it. on top of that theres an 11 to 17% reduction in
+medical spending confirmed across 5 independent studies."
+Unexpected line: "i know this sounds made up. every client said the same thing."
+End with: "worth 20 minutes?" Nothing else.`
   },
   {
     day: 14,
     subject: null,
     research: true,
-    goal: `Email 4 — THE EMPLOYEE TAKE-HOME PAY STORY.
-Flip to what this does for employees — the retention and recruitment angle.
-Every enrolled employee sees their take-home pay increase without a raise.
-At $60k thats roughly $1,572 more per year in their pocket just from the tax structure.
-Plus $625 a month in indemnity payments for simple healthy activities.
-Plus 24/7 family telemedicine at $0, behavioral health at $0, 23 new benefits total.
-Frame it: "imagine telling a candidate their take-home pay goes up, they get 23 new benefits
-added on top of the current plan, and it costs the company nothing to offer.
-no raise required. thats the conversation were having with companies right now."
-Use research if relevant to their workforce or growth. One question. Under 60 words.`
+    goal: `Email 4 — THE EMPLOYEE STORY.
+Flip to employees. Retention and recruitment angle. Under 50 words.
+Unexpected line: "you can give every employee more take-home pay without raising wages."
+Then: at $60k salary thats roughly $1,572 more per year just from the tax structure.
+plus $625 a month in indemnity payments for simple healthy activities.
+plus 24/7 family telemedicine at $0.
+Frame it: "imagine telling a candidate their pay goes up and you didnt spend a dollar more."
+Use research if relevant. One question.`
   },
   {
     day: 21,
     subject: null,
     research: false,
     goal: `Email 5 — PATTERN INTERRUPT.
-Two sentences maximum. After four longer emails a short one stands out completely.
+Two sentences. Maximum. After four longer emails this short one stops them.
 Something like: "still worth 20 minutes? i can show you exactly what the numbers
 look like for your company. no pitch deck just the math."
-Nothing else. Do not add anything.`
+Do not add anything else at all.`
   },
   {
     day: 25,
     subject: null,
     research: false,
     goal: `Email 6 — THE REFERRAL ASK.
-Stop asking for the meeting. Ask for the right person instead.
-Something like: "if this kind of decision sits with someone else at your company
-is there a better person for me to reach out to directly — CFO, HR director,
-whoever handles benefits or payroll. happy to go straight to them so i stop
-filling up your inbox."
-Friendly not passive aggressive. Under 45 words.`
+Stop asking for the meeting. Ask for the right person. Under 40 words.
+Something like: "if this doesnt sit with you is there a better person to reach out to directly —
+CFO, HR director, whoever handles benefits. happy to go straight to them."
+Friendly. Not passive aggressive.`
   },
   {
     day: 30,
     subject: null,
     research: false,
     goal: `Email 7 — THE BREAKUP.
-Highest reply rate email. Short, honest, self-aware. No pitch whatsoever.
-Something like: "ive reached out a few times and havent heard back which is
-completely fine. should i stop reaching out? just want to make sure im not
-being annoying if the timings just off."
-One warm sentence max after that. Nothing else.`
+Highest reply rate email. Short, honest, self-aware. Under 35 words.
+"ive reached out a few times and havent heard back which is completely fine.
+should i stop reaching out? just want to make sure im not being annoying
+if the timings just off."
+Nothing else. No pitch. No features. The honesty is the point.`
   },
   {
     day: 35,
     subject: null,
     research: false,
     goal: `Email 8 — THE WARM CLOSE.
-Final email. No pitch. No pressure. Genuinely warm.
+Final email. No pitch. Genuinely warm. Under 40 words.
 Let them know you wont reach out again.
-Something like: "whenever the benefits conversation does come up id genuinely
-love to be a resource even if its just a sounding board. no agenda at all."
-Best possible last impression. This is the one they remember when timing is right.`
+"whenever the benefits conversation comes up id love to be a resource
+even just a sounding board. no agenda."
+Best possible last impression. This is the one they remember.`
   }
 ];
 
