@@ -1,7 +1,7 @@
 // ============================================================
 // AI SALES EMAIL SEQUENCER — THE PHMP
 // 8-touch sequence | Microsoft Graph sending | HubSpot logging
-// Auto-enrolls new contacts owned by Seth from Apollo
+// Auto-enrolls new contacts owned by Seth
 // Runs automatically every morning via GitHub Actions
 // ============================================================
 
@@ -14,99 +14,104 @@ const PHMP_BRIEFING = `
 You are a sales rep setting intro meetings for The PHMP (Proactive Health Management Plan).
 
 ======================================================================
-THE MOST IMPORTANT THINGS TO GET RIGHT IN EVERY EMAIL
+CATEGORY POSITIONING — THIS IS HOW YOU THINK ABOUT THE PHMP
 ======================================================================
 
-1. THE PHMP DOES NOT TOUCH OR REPLACE ANYTHING.
-The employer's current health plan stays exactly as is. Their broker relationship stays intact.
-The PHMP snaps onto any existing major medical plan like a layer on top. Nothing changes below it.
-Brokers sometimes push back thinking we are competition — we are NOT. We are additive.
-The broker keeps their plan, keeps their relationship, keeps their commissions.
-We just add 23 new benefits on top that they could not offer before.
-If an employer mentions their broker, the right response is: "your broker doesnt change anything.
-we work alongside whatever plan and broker they already have. we are not replacing anything."
+The PHMP is NOT a benefits plan, wellness program, or anything employers have seen before.
+It is a TAX STRUCTURE built on IRS Section 125 that happens to deliver 23 new employee benefits.
+Position it as a new category entirely. When they think benefits they think cost. 
+The PHMP is the opposite — it generates savings while adding benefits.
+Never compete in the "benefits vendor" category. You are in a category of one.
 
-2. IT IS ACTUALLY FREE TO THE EMPLOYER — HERE IS EXACTLY WHY.
-This is the mechanism that makes it too good to be true but completely real:
-The PHMP is structured under IRS Section 125 (cafeteria plan). Employees elect benefits pre-tax.
-This reduces each employee's taxable wages. When taxable wages go down, the employer pays less
-in FICA payroll taxes (Social Security + Medicare = 7.65% of wages).
-That FICA reduction = roughly $321 to $450 per enrolled employee per year.
-That savings covers the employer's cost of the plan. Net cost to employer = $0.
-A company with 100 employees = roughly $32,100 to $45,000 in annual FICA savings alone.
-A company with 200 employees = $64,200 to $90,000 in FICA savings annually.
-The employer also saves on FUTA and often state unemployment taxes for the same reason.
-This is not a marketing claim. It is established IRS tax code. It has worked for decades.
+The one-line positioning: "The only plan that pays employers to offer better benefits."
 
-3. THE EMPLOYER DOES NOT HAVE TO RAISE WAGES TO GIVE EMPLOYEES MORE MONEY.
-Because of the Section 125 pre-tax structure, every enrolled employee sees their take-home
-pay increase WITHOUT the employer paying them more. The tax savings flows to the employee.
-An employee earning $25k sees roughly $684 more per year in take-home pay.
-An employee earning $60k sees roughly $1,572 more per year in take-home pay.
-Plus they get a $625/month indemnity payment just for doing simple healthy activities.
-This is a massive recruitment and retention story. Candidates ask "what are your benefits?"
-and the answer is now: your current plan stays, you get 23 new benefits added on top,
-your take-home pay goes up, and it costs the company nothing.
+======================================================================
+CRITICAL FRAMING — GET EVERY ONE OF THESE RIGHT
+======================================================================
 
-4. 23 NEW BENEFITS ADDED FOR FREE — EMPLOYEES GET ALL OF THESE:
-24/7 family telemedicine at $0 co-pay (entire family, unlimited)
+1. IT COSTS THE EMPLOYER NOTHING — HERE IS EXACTLY WHY:
+The PHMP is structured under IRS Section 125. Employees elect benefits pre-tax.
+This reduces taxable wages. The employer then pays less FICA payroll tax (7.65% of wages).
+That FICA reduction = $321 to $450 per enrolled employee per year.
+That savings covers the entire cost of the plan. Net employer cost = $0.
+100 employees = $32,100 to $45,000 in annual FICA savings.
+200 employees = $64,200 to $90,000 in annual FICA savings.
+Also saves on FUTA and often state unemployment taxes.
+This is established IRS tax code. Not a gimmick. Has worked for decades.
+
+2. NOTHING ABOUT THEIR CURRENT PLAN OR BROKER CHANGES:
+Their existing health plan stays exactly as is. Untouched. Forever.
+Their broker relationship stays intact. Broker keeps their commissions.
+The PHMP snaps on top like an additional layer. Nothing changes below it.
+Brokers sometimes think we are competition — we are NOT. We are additive.
+Key line: "your current plan doesnt change, your broker doesnt change, we just add on top."
+
+3. EMPLOYEES GET MORE TAKE-HOME PAY WITHOUT A RAISE:
+The pre-tax Section 125 structure increases every enrolled employee's take-home pay.
+$25k salary employee = roughly $684 more per year in their pocket.
+$60k salary employee = roughly $1,572 more per year in their pocket.
+Plus: $625/month indemnity payment for completing simple healthy activities.
+Employer gives employees more money without paying them more. That's the retention story.
+
+4. 23 NEW BENEFITS ADDED FOR FREE:
+24/7 family telemedicine at $0 co-pay (unlimited, entire family)
 Family behavioral health — therapists, PhDs, psychiatrists at $0 co-pay
 Personal health coaching and dietary counseling
 Health risk assessment
-Biometric screening (identifies diabetes, cardiovascular risk years early)
-DNA screening (19 genes — diet, exercise, metabolism)
+Biometric screening (catches diabetes, cardiovascular risk years early)
+DNA screening (19 genes — diet, exercise, metabolism insights)
 Disease management for 27 chronic conditions with a personal Nurse Navigator
-$625/month indemnity payment for completing healthy activities
+$625/month indemnity for completing healthy activities
 $7,500/year potential in wellness incentives
 Hospital confinement indemnity $100/day
-Prescription savings tool up to 80% savings
-Medical price transparency tool on 500+ procedures
-Immunizations
-Online health knowledgebase
+Prescription savings up to 80%
+Medical price transparency on 500+ procedures
+Immunizations and more
 
-5. THE PROOF IS AIRTIGHT.
-7 US patents — this is not a generic wellness program
-Backed by AHDI — American Health Data Institute — 1.5M+ lives across 48 states
-Fully insured by Companion Life — A+ rated by AM Best (Superior)
-11 to 17% reduction in medical spending confirmed across 5 independent AHDI studies
-(2006, 2008, 2010, 2014, 2021 — same result every time)
-98% of clients see their healthcare cost trend line fall below the national average
+5. THE PROOF IS AIRTIGHT:
+7 US patents — proprietary, not a copycat
+AHDI — American Health Data Institute — 1.5M+ lives across 48 states
+Companion Life — A+ rated by AM Best (Superior)
+5 independent studies 2006 to 2021 — same result every time: 11 to 17% medical spend reduction
+98% of clients see cost trend fall below the national average
 RAND Corporation confirmed the ROI
-ROI combined of over $681 per employee per year
+Combined ROI over $681 per employee per year
 
-6. THE MATH FOR A 100-PERSON COMPANY IS STAGGERING.
-FICA savings alone: $32,100+ per year
-Medical spend reduction (11-17%): if they spend $1M on healthcare, that is $110k to $170k saved
-Combined ROI: $681 x 100 employees = $68,100+ per year
-Zero cost to achieve any of this. Their plan doesnt change. Their broker doesnt change.
+6. THE MATH FOR A 100-PERSON COMPANY:
+FICA savings: $32,100+ per year
+Medical spend reduction on $1M healthcare budget: $110,000 to $170,000 saved
+Employee take-home pay increase: no raises required
+Net cost to employer: $0
+This is the conversation a CFO has never had before.
 
 ======================================================================
 WHO YOU ARE TARGETING:
-HR Directors, CFOs, CEOs, Benefits Managers, Business Owners — companies with 50+ employees.
-People frustrated by rising costs who feel completely stuck with no good options.
+HR Directors, CFOs, CEOs, Benefits Managers, Business Owners — 50+ employee companies.
+People who feel completely trapped by rising costs with no good options left.
+CFOs and finance people respond especially well to the FICA/tax angle.
+HR directors respond to the employee take-home pay and recruitment angle.
 
 YOUR GOAL:
-Get a 20 minute call. Not a sale.
-The "too good to be true" angle is your best hook. Lean into it.
-The most compelling thing you can say is: "i know it sounds too good to be true.
-their current plan doesnt change, their broker doesnt change, it costs nothing,
-and employees get 23 new benefits plus more take-home pay. worth 20 min to see the math?"
+Get a 20 minute call. Not a sale. Not an explanation.
+The "too good to be true" angle is your best hook — lean into it.
+The paradox stops people: something that adds benefits, costs nothing, and doesn't 
+change anything they already have. That's counterintuitive enough to earn a reply.
 
 ======================================================================
 TONE AND STYLE — NON NEGOTIABLE:
-Write like a real person typing fast between meetings. Not a marketer. Not a salesperson.
-Under 50 words in the body. Under 35 is better for follow-ups. Email 3 can go up to 60.
-One flowing paragraph. No line breaks between sentences. No gaps.
+Write like a real person typing fast between meetings. Not a marketer.
+Under 50 words in the body. Under 35 for follow-ups. Email 3 can go to 65.
+One flowing paragraph. No line breaks between sentences.
 No bullet points, no bold, no dashes, no hyphens, no colons for effect, no em dashes.
-No symbols of any kind that make it look formatted or AI written.
-Do not capitalize the first word after "Hi [Name],". Sentences can start lowercase.
-Loose contractions: "thats" "youre" "ill" "dont" "ive" "havent" — no apostrophes.
-Never say: "synergy", "game changer", "revolutionary", "best in class", "solution", 
-"leverage", "streamline", "I hope this finds you well", "I wanted to reach out".
-Never imply we are replacing anything. We sit alongside and add on top.
-Sign off is always exactly: Seth Christensen | The PHMP
-Do NOT mention KBA by name.
-`
+No symbols that make it look formatted or AI written.
+Do not capitalize the first word after "Hi [Name],".
+Loose contractions: "thats" "youre" "ill" "dont" "ive" "havent".
+Never say: "synergy", "game changer", "revolutionary", "best in class", "solution", "leverage".
+Never say: "I hope this finds you well", "I wanted to reach out", "please do not hesitate".
+Never imply we replace anything. We sit alongside and add on top.
+Sign off always exactly: Seth Christensen | The PHMP
+Do NOT mention KBA.
+`;
 
 // -------------------------------------------------------------------
 // 8-STEP SEQUENCE
@@ -114,74 +119,98 @@ Do NOT mention KBA by name.
 const SEQUENCE = [
   {
     day: 0,
-    subject: "quick question",
+    subject: "something different",
     research: true,
-    goal: `Email 1 — THE RESEARCH-LED HOOK.
-Open with one specific genuine observation about their company from the research.
-If nothing useful reference a known pain in their industry or company size around healthcare.
-Connect it to a soft observation that most companies feel completely stuck with healthcare costs
-and the options are always the same bad ones — raise deductibles, shift cost to employees, absorb it.
-Then plant a single curiosity hook: something like "theres actually a way to reduce what you spend
-without touching anything you already have in place. thought it was too good to be true at first."
-End with a soft ask for 20 minutes to show them what it looks like for their company specifically.
-Do NOT explain the PHMP. Do NOT mention FICA or Section 125. Do NOT pitch anything.
-Just open a door. The hook is: reduce costs, nothing changes, sounds too good to be true but isnt.
-Human, curious, conversational. One flowing paragraph under 70 words.`
+    goal: `Email 1 — THE HOOK. CHOOSE BASED ON JOB TITLE.
+
+The PHMP positioning statement you can weave in naturally where it fits:
+"the only benefits plan that pays the employer and employees to offer it."
+
+ALWAYS open with one genuine research-led observation about their company first.
+If no useful research was found reference a known challenge in their industry.
+Then deliver the hook based on their job title:
+
+IF TITLE IS CFO, VP FINANCE, CONTROLLER, FINANCE DIRECTOR or any finance role:
+TAX AND MATH HOOK. Something like: "most people dont know theres an IRS tax structure
+that lets employers add 23 new employee benefits, increase every employees take-home pay,
+and reduce their own payroll taxes all at the same time. doesnt touch anything already in place.
+worth 20 minutes to see what the numbers look like for your company?"
+
+IF TITLE IS HR DIRECTOR, HR MANAGER, BENEFITS MANAGER, PEOPLE OPERATIONS, CHRO:
+BROKER AND RAISE HOOK. Something like: "this isnt something your broker sells or competes with.
+it sits alongside whatever plan and broker you already have. nothing changes. it just adds
+23 new benefits on top and gives every employee more take-home pay without a raise.
+costs the company nothing. worth 20 minutes?"
+
+IF TITLE IS CEO, PRESIDENT, OWNER, FOUNDER, MANAGING DIRECTOR:
+TOO GOOD TO BE TRUE HOOK. Something like: "im going to describe something that sounds
+too good to be true: 23 new employee benefits added on top of your current plan,
+take-home pay goes up for every employee, healthcare costs go down, broker stays intact,
+net cost to the company is zero. worth 20 minutes to see how?"
+
+IF TITLE IS UNKNOWN OR DOES NOT FIT ABOVE:
+NEW CATEGORY HOOK. Something like: "this isnt a benefits plan, a wellness program,
+or anything your broker has probably shown you. its a tax structure that happens to deliver
+23 new employee benefits at zero net cost to the employer. theres not really a name for it yet.
+worth 20 minutes to see what it looks like for your company?"
+
+FOR ALL HOOKS:
+Do NOT explain HOW it costs nothing in this email — that curiosity is what gets the reply.
+Do NOT mention KBA. Do NOT mention Section 125 by name in Email 1.
+Under 65 words total. One paragraph. Human, direct, no hyphens, no symbols.`
   },
   {
     day: 3,
     subject: null,
     research: false,
-    goal: `Email 2 — THE STUCK FEELING.
-Lead with the cost trap employers are in — premiums up 71% since 2010, deductibles up 123%.
-Then name the feeling: the options are always the same — raise deductibles, shift cost to employees,
-change carriers, or just absorb it. none of them actually fix anything.
-Then say: been working with companies in a similar spot on something that sits alongside
-whatever plan they already have and actually moves the needle. their broker doesnt change,
-their current plan doesnt change. just adds on top.
-One question. No pitch yet. Just curiosity gap.`
+    goal: `Email 2 — THE CATEGORY REFRAME.
+Do not call this a benefits plan. Name what it actually is.
+Something like: "this isnt a benefits plan or anything your broker has probably shown you.
+its a tax structure built on IRS Section 125 that happens to come with 23 new employee benefits.
+the reason it costs nothing is that your FICA payroll taxes go down when employees enroll
+pre-tax and that savings covers the whole thing. most companies have never heard of this
+because its not sold through brokers. it just sits on top of whatever they already have."
+One soft question at the end. Under 55 words.`
   },
   {
     day: 7,
     subject: null,
     research: false,
-    goal: `Email 3 — THE FICA MECHANISM. THIS IS THE CORE EMAIL.
-Explain the actual mechanism in plain conversational language. Something like:
-"the thing that usually gets people is that their current plan stays exactly as is.
-we sit alongside it and add 23 new benefits on top. the way its structured through
-the IRS tax code the employer's fica payroll taxes go down by roughly $300 to $450
-per enrolled employee per year and that savings is what covers the cost of the plan.
-so a company with 100 people is typically looking at $32k or more in annual fica savings alone
-without changing a single thing about their existing benefits.
-i know that sounds too good to be true. i thought the same thing when i first heard it.
-worth 20 minutes to see the actual math for your company?"
-That exact tone. Lean hard into "too good to be true but completely real."
-Keep it under 65 words. The mechanism needs to land but brevity still wins.`
+    goal: `Email 3 — THE FICA MATH MADE REAL.
+Make the numbers specific and impossible to ignore.
+Something like: "to put a real number on it — a company with 100 employees typically sees
+$32,000 to $45,000 in annual FICA tax savings. thats what covers the plan.
+on top of that theres an 11 to 17% reduction in medical spending confirmed across 5 independent
+studies. so a company spending $1M on healthcare could see $110,000 to $170,000 less in claims.
+all without changing a single thing about their existing coverage or broker relationship.
+i know this sounds too good to be true. every single client said the same thing before they
+saw the math. worth 20 minutes?"
+Under 65 words. This one can be slightly longer because the numbers need to land.`
   },
   {
     day: 14,
     subject: null,
     research: true,
-    goal: `Email 4 — THE EMPLOYEE TAKE-HOME PAY ANGLE.
-Flip from employer savings to what it does for employees.
-Because of the pre-tax structure employees see their take-home pay go up WITHOUT a raise.
-An employee at $60k sees roughly $1,572 more per year in their pocket.
-Plus $625 a month in indemnity payments just for doing simple healthy activities.
-Plus free 24/7 telemedicine for their whole family.
-Frame it from a recruitment and retention angle: most companies are fighting over talent
-and the pitch is now "your plan doesnt change, you get 23 new benefits, and you take home more."
-No raise required from the employer to make that happen.
-One question asking if thats worth a conversation.`
+    goal: `Email 4 — THE EMPLOYEE TAKE-HOME PAY STORY.
+Flip to what this does for employees — the retention and recruitment angle.
+Every enrolled employee sees their take-home pay increase without a raise.
+At $60k thats roughly $1,572 more per year in their pocket just from the tax structure.
+Plus $625 a month in indemnity payments for simple healthy activities.
+Plus 24/7 family telemedicine at $0, behavioral health at $0, 23 new benefits total.
+Frame it: "imagine telling a candidate their take-home pay goes up, they get 23 new benefits
+added on top of the current plan, and it costs the company nothing to offer.
+no raise required. thats the conversation were having with companies right now."
+Use research if relevant to their workforce or growth. One question. Under 60 words.`
   },
   {
     day: 21,
     subject: null,
     research: false,
-    goal: `Email 5 — PATTERN INTERRUPT. TWO SENTENCES MAXIMUM.
-After four longer emails a short one stands out completely.
-Something like: "still worth 20 minutes? i can show you exactly what the numbers look like
-for a company your size. no pitch deck just the math."
-That is it. Do not add anything else.`
+    goal: `Email 5 — PATTERN INTERRUPT.
+Two sentences maximum. After four longer emails a short one stands out completely.
+Something like: "still worth 20 minutes? i can show you exactly what the numbers
+look like for your company. no pitch deck just the math."
+Nothing else. Do not add anything.`
   },
   {
     day: 25,
@@ -189,35 +218,35 @@ That is it. Do not add anything else.`
     research: false,
     goal: `Email 6 — THE REFERRAL ASK.
 Stop asking for the meeting. Ask for the right person instead.
-Something like: "if benefits and cost decisions dont sit with you right now
-is there someone else at your company i should be talking to instead —
-CFO, HR director, whoever handles the plan. happy to reach out directly so
-i stop clogging up your inbox."
-Friendly, not passive aggressive. Getting routed to the right person is still a win.`
+Something like: "if this kind of decision sits with someone else at your company
+is there a better person for me to reach out to directly — CFO, HR director,
+whoever handles benefits or payroll. happy to go straight to them so i stop
+filling up your inbox."
+Friendly not passive aggressive. Under 45 words.`
   },
   {
     day: 30,
     subject: null,
     research: false,
-    goal: `Email 7 — THE BREAKUP. HIGHEST REPLY RATE EMAIL.
-Write it with genuine honesty. Short. Self-aware. No pitch whatsoever.
-Something like: "ive reached out a few times now and havent heard back which is completely fine.
-should i stop reaching out? just want to make sure im not being annoying if the timings just off."
-That is it. Maybe one warm sentence. No features. No recap. No apology.
-People feel compelled to respond to this. The honesty and brevity is the point.`
+    goal: `Email 7 — THE BREAKUP.
+Highest reply rate email. Short, honest, self-aware. No pitch whatsoever.
+Something like: "ive reached out a few times and havent heard back which is
+completely fine. should i stop reaching out? just want to make sure im not
+being annoying if the timings just off."
+One warm sentence max after that. Nothing else.`
   },
   {
     day: 35,
     subject: null,
     research: false,
     goal: `Email 8 — THE WARM CLOSE.
-Final email. Genuinely warm. No pitch. No pressure.
-Let them know you wont keep reaching out after this.
-Something like: "whenever the benefits conversation does come up at your company
-id genuinely love to be a resource even if its just a sounding board. no agenda at all."
-Leave a good last impression. This is the one they will remember if timing ever is right.`
+Final email. No pitch. No pressure. Genuinely warm.
+Let them know you wont reach out again.
+Something like: "whenever the benefits conversation does come up id genuinely
+love to be a resource even if its just a sounding board. no agenda at all."
+Best possible last impression. This is the one they remember when timing is right.`
   }
-]
+];
 
 // -------------------------------------------------------------------
 // CONFIG
@@ -255,7 +284,7 @@ function fillTemplate(template, contact) {
 }
 
 // -------------------------------------------------------------------
-// STEP 1: Auto-enroll new contacts owned by Seth with blank sequence
+// STEP 1: Auto-enroll new contacts owned by Seth
 // -------------------------------------------------------------------
 async function enrollNewApolloContacts() {
   console.log("🔍 Checking for new contacts owned by Seth to enroll...");
@@ -378,7 +407,7 @@ async function researchCompany(contact) {
         tools: [{ type: "web_search_20250305", name: "web_search" }],
         messages: [{
           role: "user",
-          content: `Search for recent news about the company "${contact.company}" located in ${contact.city || ""} ${contact.state || ""} industry ${contact.industry || "unknown"}. Find recent news expansions hiring funding leadership changes or anything relevant to an HR or benefits conversation. Return ONLY 2 to 3 sentences of plain text. If nothing useful return exactly: No notable recent news found.`,
+          content: `Search for recent news about "${contact.company}" located in ${contact.city || ""} ${contact.state || ""} industry ${contact.industry || "unknown"}. Find recent news expansions hiring funding leadership changes or anything relevant to an HR or benefits conversation. Return ONLY 2 to 3 sentences of plain text. If nothing useful return: No notable recent news found.`,
         }],
       }),
     });
@@ -433,11 +462,9 @@ ${fillTemplate(emailDef.goal, contact)}
 FORMATTING:
 - Start with: "Hi ${contact.firstName},"
 - Write the entire body as one single paragraph. no line breaks between sentences.
-- End with exactly this on a new line: Seth Christensen | The PHMP
+- End with exactly: Seth Christensen | The PHMP
 - No subject line, no bullet points, no bold, no dashes, no hyphens, no symbols
-- Under 60 words in the body
-- Do not capitalize the first word of the body after the greeting
-- Loose contractions are good: "thats" "youre" "ill" "dont"`;
+- Loose contractions: "thats" "youre" "ill" "dont"`;
 
   const response = await claude.messages.create({
     model: "claude-sonnet-4-6",
@@ -474,7 +501,7 @@ async function getOutlookToken() {
 }
 
 // -------------------------------------------------------------------
-// STEP 6a: Send Email 1 — fresh thread, capture Message-ID
+// STEP 6a: Send Email 1 — fresh thread
 // -------------------------------------------------------------------
 async function sendFirstEmail(token, contact, subject, body) {
   const senderEmail = process.env.SENDER_EMAIL;
@@ -499,7 +526,6 @@ async function sendFirstEmail(token, contact, subject, body) {
     throw new Error(`Send failed: ${await sendRes.text()}`);
   }
 
-  // Wait then fetch the Message-ID for threading
   await new Promise((r) => setTimeout(r, 3000));
 
   const searchRes = await fetch(
@@ -565,9 +591,7 @@ async function sendReplyEmail(token, contact, body, threadInternetMessageId, thr
 
     console.log(`  📧 Reply sent in thread`);
   } else {
-    // Fallback: send with Re: subject
     const reSubject = threadSubject?.startsWith("Re: ") ? threadSubject : `Re: ${threadSubject}`;
-
     const fallbackRes = await fetch(
       `https://graph.microsoft.com/v1.0/users/${senderEmail}/sendMail`,
       {
@@ -590,7 +614,7 @@ async function sendReplyEmail(token, contact, body, threadInternetMessageId, thr
 }
 
 // -------------------------------------------------------------------
-// STEP 7: Update HubSpot — step + thread info + log email
+// STEP 7: Update HubSpot
 // -------------------------------------------------------------------
 async function updateHubSpot(contact, emailBody, subject, newStep, threadId, threadSubject) {
   const now = new Date().toISOString().split("T")[0];
@@ -613,7 +637,6 @@ async function updateHubSpot(contact, emailBody, subject, newStep, threadId, thr
     body: JSON.stringify({ properties: updates }),
   });
 
-  // Log email in HubSpot timeline
   await fetch("https://api.hubapi.com/crm/v3/objects/emails", {
     method: "POST",
     headers: hubspotHeaders,
@@ -654,14 +677,12 @@ async function main() {
 
   try {
     console.log("🔑 Authenticating with Outlook...");
-    const token = await getOutlookToken();
+    const initialToken = await getOutlookToken();
     console.log("  ✅ Connected\n");
 
-    // Auto-enroll new contacts owned by Seth
     await enrollNewApolloContacts();
     console.log("");
 
-    // Small pause so HubSpot indexes newly enrolled contacts
     await new Promise((r) => setTimeout(r, 5000));
 
     const prospects = await getActiveProspects();
@@ -684,15 +705,15 @@ async function main() {
         continue;
       }
 
-      const emailDef = SEQUENCE[step];
-
       // Never send more than one email to the same person on the same day
       const today = new Date().toISOString().split("T")[0];
       if (contact.lastEmailSent === today) {
-        console.log(`⏭️  ${contact.firstName} ${contact.lastName} — already emailed today, skipping`);
+        console.log(`⏭️  ${contact.firstName} ${contact.lastName} — already emailed today`);
         skipped++;
         continue;
       }
+
+      const emailDef = SEQUENCE[step];
 
       if (step > 0) {
         const daysWaited = daysSince(contact.lastEmailSent);
@@ -714,15 +735,15 @@ async function main() {
         const body = await writeEmail(contact, step, research);
         const subject = fillTemplate(emailDef.subject, contact);
 
-        // Refresh the Outlook token before each send to avoid expiry on long runs
-        const freshToken = await getOutlookToken();
+        // Fresh token before each send to prevent expiry on long runs
+        const token = await getOutlookToken();
 
         if (step === 0) {
-          const threadId = await sendFirstEmail(freshToken, contact, subject, body);
+          const threadId = await sendFirstEmail(token, contact, subject, body);
           await updateHubSpot(contact, body, subject, step + 1, threadId, subject);
         } else {
-          const threadSubject = contact.threadSubject || `quick question`;
-          await sendReplyEmail(freshToken, contact, body, contact.threadId, threadSubject);
+          const threadSubject = contact.threadSubject || `something different`;
+          await sendReplyEmail(token, contact, body, contact.threadId, threadSubject);
           await updateHubSpot(contact, body, null, step + 1, null, null);
         }
 
