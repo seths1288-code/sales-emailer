@@ -376,12 +376,12 @@ function pickSubjectLine(contact) {
 // -------------------------------------------------------------------
 function daysSince(dateString) {
   if (!dateString) return 999;
-  // Compare calendar dates in Mountain Time to avoid UTC offset issues
-  // HubSpot stores last_email_sent as YYYY-MM-DD date string
+  // Strip time component if present — HubSpot sometimes returns full timestamps
+  const dateOnly = dateString.split("T")[0];
   const todayMT = new Date().toLocaleDateString("en-CA", { timeZone: "America/Denver" });
-  const todayDate = new Date(todayMT);
-  const thenDate = new Date(dateString);
-  return Math.floor((todayDate - thenDate) / (1000 * 60 * 60 * 24));
+  const then = new Date(dateOnly);
+  const today = new Date(todayMT);
+  return Math.floor((today - then) / (1000 * 60 * 60 * 24));
 }
 
 function fillTemplate(template, contact) {
@@ -821,13 +821,7 @@ async function main() {
         continue;
       }
 
-      // Same-day protection: skip if emailed less than 1 day ago
-      // daysSince returns 0 for today, 1 for yesterday etc
-      if (contact.lastEmailSent && daysSince(contact.lastEmailSent) < 1) {
-        console.log(`⏭️  ${contact.firstName} ${contact.lastName} — emailed today already, skipping`);
-        skipped++;
-        continue;
-      }
+
 
       const emailDef = SEQUENCE[step];
 
