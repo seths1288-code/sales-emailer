@@ -417,7 +417,7 @@ async function getActiveProspects() {
           "numberofemployees", "sequence_step", "sequence_active",
           "last_email_sent", "thread_id", "thread_subject",
         ],
-        limit: 350,
+        limit: 200,
       }),
     }
   );
