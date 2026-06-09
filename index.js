@@ -133,7 +133,7 @@ WHAT MAKES THESE EMAILS STAND OUT — APPLY ALL OF THESE:
 const SEQUENCE = [
   {
     day: 0,
-    subject: "something different",
+    subject: "PICK_BY_TITLE",
     research: true,
     goal: `Email 1 — THE HOOK. CHOOSE BASED ON JOB TITLE.
 
@@ -178,81 +178,93 @@ Under 65 words total. One paragraph. Human, direct, no hyphens, no symbols.`
     subject: null,
     research: false,
     goal: `Email 2 — THE CATEGORY REFRAME.
-Different angle from email 1. No repeated points.
-Reframe what the PHMP actually is — not a benefits plan, a tax structure.
-One unexpected line: something like "every other benefits conversation starts with a price tag.
-this one ends with savings." or "theres no category for this yet."
-Show empathy for the trap they are in — same bad options every year.
-Then: "its not sold through brokers. it just sits on top of whatever they already have.
-nothing below it changes." One soft question. Under 50 words. One paragraph.`
+FIRST LINE RULE: The first line must stop them mid-scroll. It shows in the inbox preview.
+Lead with the most counterintuitive thing about the PHMP as the very first sentence.
+Examples of strong first lines:
+"every other benefits conversation starts with a price tag. this one ends with savings."
+"this isnt a benefits plan. its a tax structure that happens to come with 23 new benefits."
+"most companies have never heard of this because its not sold through brokers."
+Pick the strongest one for this specific person based on their title and company.
+Then: it sits on top of whatever they already have, nothing below it changes, costs nothing.
+One soft question at the end. Under 50 words total.`
   },
   {
     day: 7,
     subject: null,
     research: false,
     goal: `Email 3 — THE FICA MATH.
-Make the numbers real and specific. Under 55 words.
-Something like: "a company with [their size or similar] employees typically sees
-$32,000 to $45,000 in annual payroll tax savings just from the structure of this plan.
-thats what covers the cost of it. on top of that theres an 11 to 17% reduction in
-medical spending confirmed across 5 independent studies."
-Unexpected line: "i know this sounds made up. every client said the same thing."
-End with: "worth 20 minutes?" Nothing else.`
+FIRST LINE RULE: Lead with a number so specific it feels impossible to ignore.
+Examples of strong first lines:
+"a company with [their size] employees typically sees $32,000 to $45,000 in annual payroll tax savings from this. thats what covers the cost."
+"5 independent studies. same result every time. 11 to 17% reduction in medical spending."
+"i know this sounds made up. every single client said the same thing before they saw the math."
+Then back it up with the proof: AHDI, 5 studies, A+ carrier, 7 patents.
+End with: "worth 20 minutes?" Under 55 words total.`
   },
   {
     day: 14,
     subject: null,
     research: true,
     goal: `Email 4 — THE EMPLOYEE STORY.
-Flip to employees. Retention and recruitment angle. Under 50 words.
-Unexpected line: "you can give every employee more take-home pay without raising wages."
-Then: at $60k salary thats roughly $1,572 more per year just from the tax structure.
-plus $625 a month in indemnity payments for simple healthy activities.
-plus 24/7 family telemedicine at $0.
-Frame it: "imagine telling a candidate their pay goes up and you didnt spend a dollar more."
-Use research if relevant. One question.`
+FIRST LINE RULE: Lead with the most surprising employee benefit — the raise without the raise.
+Examples of strong first lines:
+"you can give every employee more take-home pay this year without raising a single salary."
+"95% of employees who enroll see their spendable income go up. no raise required from the employer."
+"at $60k salary thats roughly $1,572 more per year in their pocket just from the tax structure."
+Then: plus $625 a month in indemnity payments, 24/7 family telemedicine at $0, 23 new benefits total.
+Use research if there is something relevant about their workforce or hiring.
+One question. Under 50 words total.`
   },
   {
     day: 21,
     subject: null,
     research: false,
     goal: `Email 5 — PATTERN INTERRUPT.
-Two sentences. Maximum. After four longer emails this short one stops them.
-Something like: "still worth 20 minutes? i can show you exactly what the numbers
-look like for your company. no pitch deck just the math."
-Do not add anything else at all.`
+FIRST LINE RULE: After four longer emails make this one shockingly short.
+The contrast IS the hook. Two sentences maximum total.
+Examples:
+"still worth 20 minutes? i can show you exactly what the numbers look like for your company. no pitch deck just the math."
+"genuinely curious if the timing is just off or if this got buried. worth a quick look?"
+Do not add anything else. The brevity is the point.`
   },
   {
     day: 25,
     subject: null,
     research: false,
     goal: `Email 6 — THE REFERRAL ASK.
-Stop asking for the meeting. Ask for the right person. Under 40 words.
-Something like: "if this doesnt sit with you is there a better person to reach out to directly —
-CFO, HR director, whoever handles benefits. happy to go straight to them."
-Friendly. Not passive aggressive.`
+FIRST LINE RULE: Open by stopping the ask entirely — pivot to finding the right person.
+Examples of strong first lines:
+"not trying to be a pain — if this doesnt sit with you is there a better person to reach out to directly?"
+"stopping the meeting ask. if benefits decisions sit with someone else at your company id rather go straight to them."
+Then: CFO, HR director, whoever handles the plan. happy to reach out directly.
+Under 40 words total.`
   },
   {
     day: 30,
     subject: null,
     research: false,
     goal: `Email 7 — THE BREAKUP.
-Highest reply rate email. Short, honest, self-aware. Under 35 words.
-"ive reached out a few times and havent heard back which is completely fine.
-should i stop reaching out? just want to make sure im not being annoying
-if the timings just off."
-Nothing else. No pitch. No features. The honesty is the point.`
+FIRST LINE RULE: The most honest first line wins. No warmup. No preamble. Just the truth.
+Examples:
+"should i stop reaching out?"
+"ive sent a few of these and havent heard back — completely fine if the timings off."
+"this is probably my last one."
+That IS the first line. Then one short follow-up sentence at most.
+Under 30 words total. The honesty and brevity is what makes people reply.`
   },
   {
     day: 35,
     subject: null,
     research: false,
     goal: `Email 8 — THE WARM CLOSE.
-Final email. No pitch. Genuinely warm. Under 40 words.
-Let them know you wont reach out again.
-"whenever the benefits conversation comes up id love to be a resource
-even just a sounding board. no agenda."
-Best possible last impression. This is the one they remember.`
+FIRST LINE RULE: Open with genuine warmth that signals this is truly the last one.
+Examples:
+"last one from me — promise."
+"not going to keep showing up in your inbox after this."
+"this is it from my end."
+Then: whenever the benefits conversation comes up id genuinely love to be a resource,
+even just a sounding board, no agenda at all.
+Leave the best possible last impression. Under 40 words total.`
   }
 ];
 
@@ -273,6 +285,91 @@ const hubspotHeaders = {
 };
 
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+// -------------------------------------------------------------------
+// SUBJECT LINE SELECTION — picks best subject by job title
+// -------------------------------------------------------------------
+function pickSubjectLine(contact) {
+  const title = (contact.jobTitle || "").toLowerCase();
+
+  // CFO / Finance titles — tax and money angle
+  if (
+    title.includes("cfo") || title.includes("chief financial") ||
+    title.includes("finance director") || title.includes("controller") ||
+    title.includes("vp finance") || title.includes("treasurer") ||
+    title.includes("accounting")
+  ) {
+    const subjects = [
+      "this will sound made up",
+      "something your accountant might not know",
+      "the tax structure nobody talks about",
+      "no catch. genuinely.",
+      "costs nothing. adds 23 benefits.",
+    ];
+    return subjects[Math.floor(Math.random() * subjects.length)];
+  }
+
+  // HR / Benefits / People titles — employee and benefits angle
+  if (
+    title.includes("hr ") || title.includes("human resource") ||
+    title.includes("benefits") || title.includes("people ops") ||
+    title.includes("chro") || title.includes("talent") ||
+    title.includes("workforce") || title.includes("hris") ||
+    title.includes("compensation")
+  ) {
+    const subjects = [
+      "your employees take-home pay",
+      "23 benefits your broker cant offer",
+      "the benefits conversation nobody is having",
+      "what if the benefits were free",
+      "your current plan stays. this just adds on top.",
+    ];
+    return subjects[Math.floor(Math.random() * subjects.length)];
+  }
+
+  // CEO / Owner / President titles — big picture angle
+  if (
+    title.includes("ceo") || title.includes("president") ||
+    title.includes("owner") || title.includes("founder") ||
+    title.includes("principal") || title.includes("managing director") ||
+    title.includes("chief executive") || title.includes("partner")
+  ) {
+    const subjects = [
+      "costs nothing. adds 23 benefits.",
+      "sounds too good to be true",
+      "the only plan that pays you to offer it",
+      "this will sound made up",
+      "no catch. genuinely.",
+    ];
+    return subjects[Math.floor(Math.random() * subjects.length)];
+  }
+
+  // Operations / Admin titles
+  if (
+    title.includes("operations") || title.includes("coo") ||
+    title.includes("office manager") || title.includes("administrator") ||
+    title.includes("director of ops")
+  ) {
+    const subjects = [
+      "cuts costs. adds benefits. nothing changes.",
+      "the plan that runs itself",
+      "zero net cost employee benefits",
+      "something worth 20 minutes",
+      "adds 23 benefits at no cost",
+    ];
+    return subjects[Math.floor(Math.random() * subjects.length)];
+  }
+
+  // Default — curiosity gap subjects for unknown titles
+  const defaultSubjects = [
+    "this will sound too good to be true",
+    "honest question about your benefits",
+    "the plan that pays for itself",
+    "something your broker hasnt mentioned",
+    "costs nothing. changes nothing. adds everything.",
+  ];
+  return defaultSubjects[Math.floor(Math.random() * defaultSubjects.length)];
+}
 
 // -------------------------------------------------------------------
 // HELPERS
@@ -703,8 +800,15 @@ async function main() {
 
     let sent = 0;
     let skipped = 0;
+    const DAILY_SEND_CAP = 60;
 
     for (const contact of prospects) {
+      // Stop for the day once we hit the daily cap
+      if (sent >= DAILY_SEND_CAP) {
+        console.log(`\n📨 Daily send cap of ${DAILY_SEND_CAP} reached — remaining contacts will be picked up tomorrow`);
+        break;
+      }
+
       const step = contact.sequenceStep;
 
       if (step >= SEQUENCE.length) {
@@ -741,7 +845,11 @@ async function main() {
         if (emailDef.research) research = await researchCompany(contact);
 
         const body = await writeEmail(contact, step, research);
-        const subject = fillTemplate(emailDef.subject, contact);
+        // For Email 1 pick the best subject based on job title
+        // For follow-ups keep the Re: thread subject
+        const subject = (step === 0)
+          ? pickSubjectLine(contact)
+          : fillTemplate(emailDef.subject, contact);
 
         // Fresh token before each send to prevent expiry on long runs
         const token = await getOutlookToken();
