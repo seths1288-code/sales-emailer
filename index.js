@@ -14,117 +14,91 @@ const PHMP_BRIEFING = `
 You are a sales rep setting intro meetings for The PHMP (Proactive Health Management Plan).
 
 ======================================================================
-CATEGORY POSITIONING — THIS IS HOW YOU THINK ABOUT THE PHMP
+CATEGORY POSITIONING
 ======================================================================
 
 The PHMP is NOT a benefits plan, wellness program, or anything employers have seen before.
 It is a TAX STRUCTURE built on IRS Section 125 that happens to deliver 23 new employee benefits.
-Position it as a new category entirely. When they think benefits they think cost. 
-The PHMP is the opposite — it generates savings while adding benefits.
-Never compete in the "benefits vendor" category. You are in a category of one.
+You are in a category of one. Never compete in the benefits vendor category.
 
-The one-line positioning: "The only plan that pays employers to offer better benefits."
+The positioning statement: "the only benefits plan that pays the employer and employees to offer it."
 
 ======================================================================
-CRITICAL FRAMING — GET EVERY ONE OF THESE RIGHT
+CRITICAL FRAMING
 ======================================================================
 
-1. IT COSTS THE EMPLOYER NOTHING — HERE IS EXACTLY WHY:
-The PHMP is structured under IRS Section 125. Employees elect benefits pre-tax.
-This reduces taxable wages. The employer then pays less FICA payroll tax (7.65% of wages).
+1. IT COSTS THE EMPLOYER NOTHING:
+The PHMP uses IRS Section 125. Employees elect benefits pre-tax which reduces taxable wages.
+The employer then pays less FICA payroll tax (7.65% of wages).
 That FICA reduction = $321 to $450 per enrolled employee per year.
 That savings covers the entire cost of the plan. Net employer cost = $0.
 100 employees = $32,100 to $45,000 in annual FICA savings.
 200 employees = $64,200 to $90,000 in annual FICA savings.
-Also saves on FUTA and often state unemployment taxes.
 This is established IRS tax code. Not a gimmick. Has worked for decades.
 
 2. NOTHING ABOUT THEIR CURRENT PLAN OR BROKER CHANGES:
-Their existing health plan stays exactly as is. Untouched. Forever.
+Their existing health plan stays exactly as is. Untouched.
 Their broker relationship stays intact. Broker keeps their commissions.
 The PHMP snaps on top like an additional layer. Nothing changes below it.
-Brokers sometimes think we are competition — we are NOT. We are additive.
-Key line: "your current plan doesnt change, your broker doesnt change, we just add on top."
+We are NOT competition for brokers. We are additive.
 
 3. EMPLOYEES GET MORE TAKE-HOME PAY WITHOUT A RAISE:
-The pre-tax Section 125 structure increases every enrolled employee's take-home pay.
-$25k salary employee = roughly $684 more per year in their pocket.
-$60k salary employee = roughly $1,572 more per year in their pocket.
-Plus: $625/month indemnity payment for completing simple healthy activities.
-Employer gives employees more money without paying them more. That's the retention story.
+The pre-tax Section 125 structure increases every enrolled employee take-home pay.
+$25k salary = roughly $684 more per year.
+$60k salary = roughly $1,572 more per year.
+Plus $625 per month indemnity payment for completing simple healthy activities.
 
 4. 23 NEW BENEFITS ADDED FOR FREE:
-24/7 family telemedicine at $0 co-pay (unlimited, entire family)
-Family behavioral health — therapists, PhDs, psychiatrists at $0 co-pay
+24/7 family telemedicine at $0 co-pay
+Family behavioral health at $0 co-pay
 Personal health coaching and dietary counseling
-Health risk assessment
-Biometric screening (catches diabetes, cardiovascular risk years early)
-DNA screening (19 genes — diet, exercise, metabolism insights)
+Biometric and DNA screenings
 Disease management for 27 chronic conditions with a personal Nurse Navigator
-$625/month indemnity for completing healthy activities
-$7,500/year potential in wellness incentives
-Hospital confinement indemnity $100/day
+$625 per month indemnity for completing healthy activities
+$7,500 per year potential in wellness incentives
+Hospital confinement indemnity $100 per day
 Prescription savings up to 80%
 Medical price transparency on 500+ procedures
-Immunizations and more
 
-5. THE PROOF IS AIRTIGHT:
-7 US patents — proprietary, not a copycat
-AHDI — American Health Data Institute — 1.5M+ lives across 48 states
-Companion Life — A+ rated by AM Best (Superior)
-5 independent studies 2006 to 2021 — same result every time: 11 to 17% medical spend reduction
+5. THE PROOF:
+7 US patents
+AHDI — 1.5M+ lives across 48 states
+Companion Life — A+ rated by AM Best
+5 independent studies 2006 to 2021 — 11 to 17% medical spend reduction every time
 98% of clients see cost trend fall below the national average
 RAND Corporation confirmed the ROI
 Combined ROI over $681 per employee per year
 
-6. THE MATH FOR A 100-PERSON COMPANY:
-FICA savings: $32,100+ per year
-Medical spend reduction on $1M healthcare budget: $110,000 to $170,000 saved
-Employee take-home pay increase: no raises required
+6. THE MATH FOR 100 EMPLOYEES:
+FICA savings: $32,100 to $45,000 per year
+Medical spend reduction on $1M budget: $110,000 to $170,000 saved
 Net cost to employer: $0
-This is the conversation a CFO has never had before.
 
 ======================================================================
-WHO YOU ARE TARGETING:
-HR Directors, CFOs, CEOs, Benefits Managers, Business Owners — 50+ employee companies.
-People who feel completely trapped by rising costs with no good options left.
-CFOs and finance people respond especially well to the FICA/tax angle.
-HR directors respond to the employee take-home pay and recruitment angle.
-
 YOUR GOAL:
-Get a 20 minute call. Not a sale. Not an explanation.
-The "too good to be true" angle is your best hook — lean into it.
-The paradox stops people: something that adds benefits, costs nothing, and doesn't 
-change anything they already have. That's counterintuitive enough to earn a reply.
+Get a 20 minute call. Not a sale. The too good to be true angle is your best hook.
 
-======================================================================
 TONE AND STYLE — NON NEGOTIABLE:
-Write like a real person typing fast on their phone between meetings. Not a marketer ever.
-Under 50 words maximum in the body. Under 35 for follow-ups. Email 3 can go to 55.
+Write like a real person typing fast between meetings. Not a marketer.
+Under 50 words in the body. Under 35 for follow-ups. Email 3 can go to 55.
 One flowing paragraph. No line breaks between sentences whatsoever.
 No bullet points, no bold, no dashes, no hyphens, no colons for effect, no em dashes.
-No symbols of any kind that make it look formatted or AI written.
+No symbols of any kind.
 Do not capitalize the first word after "Hi [Name],".
-Loose contractions always: "thats" "youre" "ill" "dont" "ive" "havent" — no apostrophes ever.
-Never say: "synergy", "game changer", "revolutionary", "best in class", "solution", "leverage", "streamline".
-Never say: "I hope this finds you well", "I wanted to reach out", "please do not hesitate".
+Loose contractions: "thats" "youre" "ill" "dont" "ive" "havent".
+Never say: synergy, game changer, revolutionary, best in class, solution, leverage, streamline.
 Never imply we replace anything. We sit alongside and add on top.
 Sign off always exactly: Seth Christensen | The PHMP
 Do NOT mention KBA.
 
-WHAT MAKES THESE EMAILS STAND OUT — APPLY ALL OF THESE:
-1. SPECIFICITY: Never say "healthcare costs." Say "what you spend keeping [X] employees covered"
-   or "the cost of running benefits across [their industry]." Specific details feel personal.
-2. CONFIDENT UNDERSTATEMENT: The less desperate the ask sounds the more they want to say yes.
-   "worth 20 minutes?" not "I would love to connect and share our solution."
-3. ONE UNEXPECTED LINE PER EMAIL: Every email needs one sentence nobody has said to them before.
+WHAT MAKES THESE STAND OUT:
+1. SPECIFICITY: Reference their actual company size, industry, or situation.
+2. ONE UNEXPECTED LINE: Every email needs one sentence nobody has said to them before.
    Examples: "it pays you to offer it" / "your broker doesnt lose anything" /
-   "theres no catch i just know how it sounds" / "i know this sounds made up" /
-   "every other benefits conversation starts with a price tag, this one ends with savings."
-4. EMPATHY BEFORE PITCH: Show you understand their world before you say anything about the PHMP.
-   One sentence that proves you get their situation. Then the hook.
-5. NEVER EXPLAIN TOO MUCH: Say less than you want to. One point per email. Stop there.
-   The goal is curiosity not comprehension. They dont need to understand it to take the meeting.
+   "theres no catch i just know how it sounds" / "i know this sounds made up"
+3. CONFIDENT UNDERSTATEMENT: The less desperate the ask sounds the more they want to say yes.
+4. EMPATHY BEFORE PITCH: Show you understand their world before you pitch anything.
+5. NEVER EXPLAIN TOO MUCH: One point per email. Stop there.
 `;
 
 // -------------------------------------------------------------------
@@ -137,17 +111,17 @@ const SEQUENCE = [
     research: true,
     goal: `Email 1 — THE HOOK. CHOOSE BASED ON JOB TITLE.
 
-The PHMP positioning statement you can weave in naturally where it fits:
+The PHMP positioning statement you can weave in naturally:
 "the only benefits plan that pays the employer and employees to offer it."
 
 ALWAYS open with one genuine research-led observation about their company first.
-If no useful research was found reference a known challenge in their industry.
+If no useful research reference a known challenge in their industry.
 Then deliver the hook based on their job title:
 
 IF TITLE IS CFO, VP FINANCE, CONTROLLER, FINANCE DIRECTOR or any finance role:
-TAX AND MATH HOOK. Something like: "most people dont know theres an IRS tax structure
+TAX AND MATH HOOK. Something like: "most people dont know theres a tax structure
 that lets employers add 23 new employee benefits, increase every employees take-home pay,
-and reduce their own payroll taxes all at the same time. doesnt touch anything already in place.
+and reduce their own taxes all at the same time. doesnt touch anything already in place.
 worth 20 minutes to see what the numbers look like for your company?"
 
 IF TITLE IS HR DIRECTOR, HR MANAGER, BENEFITS MANAGER, PEOPLE OPERATIONS, CHRO:
@@ -163,110 +137,172 @@ take-home pay goes up for every employee, healthcare costs go down, broker stays
 net cost to the company is zero. worth 20 minutes to see how?"
 
 IF TITLE IS UNKNOWN OR DOES NOT FIT ABOVE:
-NEW CATEGORY HOOK. Something like: "this isnt a benefits plan, a wellness program,
-or anything your broker has probably shown you. its a tax structure that happens to deliver
-23 new employee benefits at zero net cost to the employer. theres not really a name for it yet.
+NEW CATEGORY HOOK. Something like: "this isnt a benefits plan or anything your broker
+has probably shown you. its a tax structure that delivers 23 new employee benefits
+at zero net cost to the employer. theres not really a name for it yet.
 worth 20 minutes to see what it looks like for your company?"
 
-FOR ALL HOOKS:
-Do NOT explain HOW it costs nothing in this email — that curiosity is what gets the reply.
-Do NOT mention KBA. Do NOT mention Section 125 by name in Email 1.
-Under 65 words total. One paragraph. Human, direct, no hyphens, no symbols.`
+Do NOT explain HOW it costs nothing — that curiosity gets the reply.
+Do NOT mention KBA. Do NOT mention Section 125 by name.
+Under 65 words. One paragraph. Human and direct.`
   },
   {
     day: 3,
     subject: null,
     research: false,
     goal: `Email 2 — THE CATEGORY REFRAME.
-FIRST LINE RULE: The first line must stop them mid-scroll. It shows in the inbox preview.
-Lead with the most counterintuitive thing about the PHMP as the very first sentence.
-Examples of strong first lines:
-"every other benefits conversation starts with a price tag. this one ends with savings."
-"this isnt a benefits plan. its a tax structure that happens to come with 23 new benefits."
-"most companies have never heard of this because its not sold through brokers."
-Pick the strongest one for this specific person based on their title and company.
-Then: it sits on top of whatever they already have, nothing below it changes, costs nothing.
-One soft question at the end. Under 50 words total.`
+FIRST LINE must stop them cold. Lead with the most counterintuitive thing.
+Examples: "every other benefits conversation starts with a price tag. this one ends with savings."
+Or: "this isnt a benefits plan. its a tax structure that happens to come with 23 new benefits."
+Or: "most companies have never heard of this because its not sold through brokers."
+Then: it sits on top of whatever they already have, nothing changes, costs nothing.
+One soft question. Under 50 words.`
   },
   {
     day: 7,
     subject: null,
     research: false,
     goal: `Email 3 — THE FICA MATH.
-FIRST LINE RULE: Lead with a number so specific it feels impossible to ignore.
-Examples of strong first lines:
-"a company with [their size] employees typically sees $32,000 to $45,000 in annual payroll tax savings from this. thats what covers the cost."
-"5 independent studies. same result every time. 11 to 17% reduction in medical spending."
-"i know this sounds made up. every single client said the same thing before they saw the math."
-Then back it up with the proof: AHDI, 5 studies, A+ carrier, 7 patents.
-End with: "worth 20 minutes?" Under 55 words total.`
+FIRST LINE leads with a number so specific it stops them.
+Examples: "a company with 100 employees typically sees $32,000 to $45,000 in annual tax savings just from the structure of this plan. thats what covers the cost."
+Or: "5 independent studies. same result every time. 11 to 17% reduction in medical spending."
+Include: "i know this sounds made up. every client said the same thing before they saw the math."
+End: "worth 20 minutes?" Under 55 words.`
   },
   {
     day: 14,
     subject: null,
     research: true,
     goal: `Email 4 — THE EMPLOYEE STORY.
-FIRST LINE RULE: Lead with the most surprising employee benefit — the raise without the raise.
-Examples of strong first lines:
-"you can give every employee more take-home pay this year without raising a single salary."
-"95% of employees who enroll see their spendable income go up. no raise required from the employer."
-"at $60k salary thats roughly $1,572 more per year in their pocket just from the tax structure."
-Then: plus $625 a month in indemnity payments, 24/7 family telemedicine at $0, 23 new benefits total.
-Use research if there is something relevant about their workforce or hiring.
-One question. Under 50 words total.`
+FIRST LINE leads with the raise without the raise.
+Examples: "you can give every employee more take-home pay this year without raising a single salary."
+Or: "95% of employees who enroll see their spendable income go up. no raise required."
+Then: at $60k salary thats $1,572 more per year. plus $625 a month for simple healthy activities. 24/7 telemedicine at $0.
+Frame it: "imagine telling a candidate their pay goes up and you didnt spend a dollar more."
+Use research if relevant. One question. Under 50 words.`
   },
   {
     day: 21,
     subject: null,
     research: false,
     goal: `Email 5 — PATTERN INTERRUPT.
-FIRST LINE RULE: After four longer emails make this one shockingly short.
-The contrast IS the hook. Two sentences maximum total.
-Examples:
-"still worth 20 minutes? i can show you exactly what the numbers look like for your company. no pitch deck just the math."
-"genuinely curious if the timing is just off or if this got buried. worth a quick look?"
-Do not add anything else. The brevity is the point.`
+Two sentences maximum. The contrast after four longer emails is the hook.
+Examples: "still worth 20 minutes? i can show you exactly what the numbers look like for your company. no pitch deck just the math."
+Or: "genuinely curious if the timing is just off or if this got buried. worth a quick look?"
+Do not add anything else.`
   },
   {
     day: 25,
     subject: null,
     research: false,
     goal: `Email 6 — THE REFERRAL ASK.
-FIRST LINE RULE: Open by stopping the ask entirely — pivot to finding the right person.
-Examples of strong first lines:
-"not trying to be a pain — if this doesnt sit with you is there a better person to reach out to directly?"
-"stopping the meeting ask. if benefits decisions sit with someone else at your company id rather go straight to them."
-Then: CFO, HR director, whoever handles the plan. happy to reach out directly.
-Under 40 words total.`
+FIRST LINE pivots away from asking for the meeting entirely.
+Examples: "not trying to be a pain — if this doesnt sit with you is there a better person to reach out to?"
+Or: "stopping the meeting ask. if benefits decisions sit with someone else id rather go straight to them."
+Then: CFO, HR director, whoever handles the plan. Under 40 words.`
   },
   {
     day: 30,
     subject: null,
     research: false,
     goal: `Email 7 — THE BREAKUP.
-FIRST LINE RULE: The most honest first line wins. No warmup. No preamble. Just the truth.
-Examples:
-"should i stop reaching out?"
-"ive sent a few of these and havent heard back — completely fine if the timings off."
-"this is probably my last one."
-That IS the first line. Then one short follow-up sentence at most.
-Under 30 words total. The honesty and brevity is what makes people reply.`
+FIRST LINE is the most honest thing you can say. No warmup.
+Examples: "should i stop reaching out?"
+Or: "ive sent a few of these and havent heard back — completely fine if the timings off."
+Then one short follow-up sentence at most. Under 30 words. The honesty is the point.`
   },
   {
     day: 35,
     subject: null,
     research: false,
     goal: `Email 8 — THE WARM CLOSE.
-FIRST LINE RULE: Open with genuine warmth that signals this is truly the last one.
-Examples:
-"last one from me — promise."
-"not going to keep showing up in your inbox after this."
-"this is it from my end."
-Then: whenever the benefits conversation comes up id genuinely love to be a resource,
-even just a sounding board, no agenda at all.
-Leave the best possible last impression. Under 40 words total.`
+FIRST LINE signals this is genuinely the last one.
+Examples: "last one from me — promise."
+Or: "not going to keep showing up in your inbox after this."
+Then: whenever the benefits conversation comes up id love to be a resource, no agenda.
+Under 40 words.`
   }
 ];
+
+// -------------------------------------------------------------------
+// SUBJECT LINE SELECTION
+// -------------------------------------------------------------------
+function pickSubjectLine(contact) {
+  const title = (contact.jobTitle || "").toLowerCase();
+
+  if (
+    title.includes("cfo") || title.includes("chief financial") ||
+    title.includes("finance director") || title.includes("controller") ||
+    title.includes("vp finance") || title.includes("treasurer") ||
+    title.includes("accounting")
+  ) {
+    const subjects = [
+      "this will sound made up",
+      "something your accountant might not know",
+      "the tax structure nobody talks about",
+      "no catch. genuinely.",
+      "costs nothing. adds 23 benefits.",
+    ];
+    return subjects[Math.floor(Math.random() * subjects.length)];
+  }
+
+  if (
+    title.includes("hr ") || title.includes("human resource") ||
+    title.includes("benefits") || title.includes("people ops") ||
+    title.includes("chro") || title.includes("talent") ||
+    title.includes("workforce") || title.includes("hris") ||
+    title.includes("compensation")
+  ) {
+    const subjects = [
+      "your employees take-home pay",
+      "23 benefits your broker cant offer",
+      "the benefits conversation nobody is having",
+      "what if the benefits were free",
+      "your current plan stays. this just adds on top.",
+    ];
+    return subjects[Math.floor(Math.random() * subjects.length)];
+  }
+
+  if (
+    title.includes("ceo") || title.includes("president") ||
+    title.includes("owner") || title.includes("founder") ||
+    title.includes("principal") || title.includes("managing director") ||
+    title.includes("chief executive") || title.includes("partner")
+  ) {
+    const subjects = [
+      "costs nothing. adds 23 benefits.",
+      "sounds too good to be true",
+      "the only plan that pays you to offer it",
+      "this will sound made up",
+      "no catch. genuinely.",
+    ];
+    return subjects[Math.floor(Math.random() * subjects.length)];
+  }
+
+  if (
+    title.includes("operations") || title.includes("coo") ||
+    title.includes("office manager") || title.includes("administrator") ||
+    title.includes("director of ops")
+  ) {
+    const subjects = [
+      "cuts costs. adds benefits. nothing changes.",
+      "zero net cost employee benefits",
+      "adds 23 benefits at no cost",
+      "something worth 20 minutes",
+      "the plan that runs itself",
+    ];
+    return subjects[Math.floor(Math.random() * subjects.length)];
+  }
+
+  const defaultSubjects = [
+    "this will sound too good to be true",
+    "honest question about your benefits",
+    "the plan that pays for itself",
+    "something your broker hasnt mentioned",
+    "costs nothing. changes nothing. adds everything.",
+  ];
+  return defaultSubjects[Math.floor(Math.random() * defaultSubjects.length)];
+}
 
 // -------------------------------------------------------------------
 // CONFIG
@@ -287,101 +323,14 @@ const hubspotHeaders = {
 const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // -------------------------------------------------------------------
-// SUBJECT LINE SELECTION — picks best subject by job title
-// -------------------------------------------------------------------
-function pickSubjectLine(contact) {
-  const title = (contact.jobTitle || "").toLowerCase();
-
-  // CFO / Finance titles — tax and money angle
-  if (
-    title.includes("cfo") || title.includes("chief financial") ||
-    title.includes("finance director") || title.includes("controller") ||
-    title.includes("vp finance") || title.includes("treasurer") ||
-    title.includes("accounting")
-  ) {
-    const subjects = [
-      "this will sound made up",
-      "something your accountant might not know",
-      "the tax structure nobody talks about",
-      "no catch. genuinely.",
-      "costs nothing. adds 23 benefits.",
-    ];
-    return subjects[Math.floor(Math.random() * subjects.length)];
-  }
-
-  // HR / Benefits / People titles — employee and benefits angle
-  if (
-    title.includes("hr ") || title.includes("human resource") ||
-    title.includes("benefits") || title.includes("people ops") ||
-    title.includes("chro") || title.includes("talent") ||
-    title.includes("workforce") || title.includes("hris") ||
-    title.includes("compensation")
-  ) {
-    const subjects = [
-      "your employees take-home pay",
-      "23 benefits your broker cant offer",
-      "the benefits conversation nobody is having",
-      "what if the benefits were free",
-      "your current plan stays. this just adds on top.",
-    ];
-    return subjects[Math.floor(Math.random() * subjects.length)];
-  }
-
-  // CEO / Owner / President titles — big picture angle
-  if (
-    title.includes("ceo") || title.includes("president") ||
-    title.includes("owner") || title.includes("founder") ||
-    title.includes("principal") || title.includes("managing director") ||
-    title.includes("chief executive") || title.includes("partner")
-  ) {
-    const subjects = [
-      "costs nothing. adds 23 benefits.",
-      "sounds too good to be true",
-      "the only plan that pays you to offer it",
-      "this will sound made up",
-      "no catch. genuinely.",
-    ];
-    return subjects[Math.floor(Math.random() * subjects.length)];
-  }
-
-  // Operations / Admin titles
-  if (
-    title.includes("operations") || title.includes("coo") ||
-    title.includes("office manager") || title.includes("administrator") ||
-    title.includes("director of ops")
-  ) {
-    const subjects = [
-      "cuts costs. adds benefits. nothing changes.",
-      "the plan that runs itself",
-      "zero net cost employee benefits",
-      "something worth 20 minutes",
-      "adds 23 benefits at no cost",
-    ];
-    return subjects[Math.floor(Math.random() * subjects.length)];
-  }
-
-  // Default — curiosity gap subjects for unknown titles
-  const defaultSubjects = [
-    "this will sound too good to be true",
-    "honest question about your benefits",
-    "the plan that pays for itself",
-    "something your broker hasnt mentioned",
-    "costs nothing. changes nothing. adds everything.",
-  ];
-  return defaultSubjects[Math.floor(Math.random() * defaultSubjects.length)];
-}
-
-// -------------------------------------------------------------------
 // HELPERS
 // -------------------------------------------------------------------
 function daysSince(dateString) {
   if (!dateString) return 999;
-  // Strip time component if present — HubSpot sometimes returns full timestamps
   const dateOnly = dateString.split("T")[0];
-  const todayMT = new Date().toLocaleDateString("en-CA", { timeZone: "America/Denver" });
   const then = new Date(dateOnly);
-  const today = new Date(todayMT);
-  return Math.floor((today - then) / (1000 * 60 * 60 * 24));
+  const now = new Date();
+  return Math.floor((now - then) / (1000 * 60 * 60 * 24));
 }
 
 function fillTemplate(template, contact) {
@@ -394,8 +343,8 @@ function fillTemplate(template, contact) {
 // -------------------------------------------------------------------
 // STEP 1: Auto-enroll new contacts owned by Seth
 // -------------------------------------------------------------------
-async function enrollNewApolloContacts() {
-  console.log("🔍 Checking for new contacts owned by Seth to enroll...");
+async function enrollNewContacts() {
+  console.log("🔍 Checking for new contacts to enroll...");
 
   const ownerId = "161753897";
 
@@ -413,7 +362,7 @@ async function enrollNewApolloContacts() {
             ],
           },
         ],
-        properties: ["firstname", "lastname", "email", "company", "sequence_active"],
+        properties: ["firstname", "lastname", "email", "company"],
         limit: 100,
       }),
     }
@@ -474,7 +423,10 @@ async function getActiveProspects() {
   );
 
   const data = await response.json();
-  if (!data.results) return [];
+  if (!data.results) {
+    console.log("  HubSpot error:", JSON.stringify(data));
+    return [];
+  }
 
   return data.results.map((c) => ({
     id: c.id,
@@ -725,8 +677,7 @@ async function sendReplyEmail(token, contact, body, threadInternetMessageId, thr
 // STEP 7: Update HubSpot
 // -------------------------------------------------------------------
 async function updateHubSpot(contact, emailBody, subject, newStep, threadId, threadSubject) {
-  // Store date in Mountain Time to match the same-day check
-  const now = new Date().toLocaleDateString("en-CA", { timeZone: "America/Denver" });
+  const now = new Date().toISOString().split("T")[0];
   const isComplete = newStep >= SEQUENCE.length;
 
   const updates = {
@@ -789,7 +740,7 @@ async function main() {
     const initialToken = await getOutlookToken();
     console.log("  ✅ Connected\n");
 
-    await enrollNewApolloContacts();
+    await enrollNewContacts();
     console.log("");
 
     await new Promise((r) => setTimeout(r, 5000));
@@ -807,9 +758,8 @@ async function main() {
     const DAILY_SEND_CAP = 60;
 
     for (const contact of prospects) {
-      // Stop for the day once we hit the daily cap
       if (sent >= DAILY_SEND_CAP) {
-        console.log(`\n📨 Daily send cap of ${DAILY_SEND_CAP} reached — remaining contacts will be picked up tomorrow`);
+        console.log(`\n📨 Daily cap of ${DAILY_SEND_CAP} reached — rest picked up tomorrow`);
         break;
       }
 
@@ -820,8 +770,6 @@ async function main() {
         skipped++;
         continue;
       }
-
-
 
       const emailDef = SEQUENCE[step];
 
@@ -843,20 +791,15 @@ async function main() {
         if (emailDef.research) research = await researchCompany(contact);
 
         const body = await writeEmail(contact, step, research);
-        // For Email 1 pick the best subject based on job title
-        // For follow-ups keep the Re: thread subject
-        const subject = (step === 0)
-          ? pickSubjectLine(contact)
-          : fillTemplate(emailDef.subject, contact);
+        const subject = (step === 0) ? pickSubjectLine(contact) : fillTemplate(emailDef.subject, contact);
 
-        // Fresh token before each send to prevent expiry on long runs
         const token = await getOutlookToken();
 
         if (step === 0) {
           const threadId = await sendFirstEmail(token, contact, subject, body);
           await updateHubSpot(contact, body, subject, step + 1, threadId, subject);
         } else {
-          const threadSubject = contact.threadSubject || `something different`;
+          const threadSubject = contact.threadSubject || subject;
           await sendReplyEmail(token, contact, body, contact.threadId, threadSubject);
           await updateHubSpot(contact, body, null, step + 1, null, null);
         }
