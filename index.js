@@ -722,7 +722,8 @@ async function sendReplyEmail(token, contact, body, threadInternetMessageId, thr
 // STEP 7: Update HubSpot
 // -------------------------------------------------------------------
 async function updateHubSpot(contact, emailBody, subject, newStep, threadId, threadSubject) {
-  const now = new Date().toISOString().split("T")[0];
+  // Store date in Mountain Time to match the same-day check
+  const now = new Date().toLocaleDateString("en-CA", { timeZone: "America/Denver" });
   const isComplete = newStep >= SEQUENCE.length;
 
   const updates = {
@@ -818,8 +819,9 @@ async function main() {
       }
 
       // Never send more than one email to the same person on the same day
-      const today = new Date().toISOString().split("T")[0];
-      if (contact.lastEmailSent === today) {
+      // Use Mountain Time to match HubSpot's date storage
+      const todayMT = new Date().toLocaleDateString("en-CA", { timeZone: "America/Denver" });
+      if (contact.lastEmailSent === todayMT) {
         console.log(`⏭️  ${contact.firstName} ${contact.lastName} — already emailed today`);
         skipped++;
         continue;
