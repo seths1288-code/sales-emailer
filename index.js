@@ -404,13 +404,22 @@ async function enrollNewApolloContacts() {
       body: JSON.stringify({
         filterGroups: [
           {
+            // New contacts with no sequence_active set
             filters: [
               { propertyName: "hubspot_owner_id", operator: "EQ", value: ownerId },
               { propertyName: "sequence_active", operator: "NOT_HAS_PROPERTY" },
             ],
           },
+          {
+            // Contacts explicitly set to false (manually added to queue)
+            filters: [
+              { propertyName: "hubspot_owner_id", operator: "EQ", value: ownerId },
+              { propertyName: "sequence_active", operator: "EQ", value: "false" },
+              { propertyName: "sequence_step", operator: "NOT_HAS_PROPERTY" },
+            ],
+          },
         ],
-        properties: ["firstname", "lastname", "email", "company", "sequence_active"],
+        properties: ["firstname", "lastname", "email", "company", "sequence_active", "sequence_step"],
         limit: 100,
       }),
     }
@@ -818,11 +827,10 @@ async function main() {
         continue;
       }
 
-      // Never send more than one email to the same person on the same day
-      // Use Mountain Time to match HubSpot's date storage
-      const todayMT = new Date().toLocaleDateString("en-CA", { timeZone: "America/Denver" });
-      if (contact.lastEmailSent === todayMT) {
-        console.log(`⏭️  ${contact.firstName} ${contact.lastName} — already emailed today`);
+      // Same-day protection: skip if emailed less than 1 day ago
+      // daysSince returns 0 for today, 1 for yesterday etc
+      if (contact.lastEmailSent && daysSince(contact.lastEmailSent) < 1) {
+        console.log(`⏭️  ${contact.firstName} ${contact.lastName} — emailed today already, skipping`);
         skipped++;
         continue;
       }
