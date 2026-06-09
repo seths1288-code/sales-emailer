@@ -376,9 +376,12 @@ function pickSubjectLine(contact) {
 // -------------------------------------------------------------------
 function daysSince(dateString) {
   if (!dateString) return 999;
-  const then = new Date(dateString);
-  const now = new Date();
-  return Math.floor((now - then) / (1000 * 60 * 60 * 24));
+  // Compare calendar dates in Mountain Time to avoid UTC offset issues
+  // HubSpot stores last_email_sent as YYYY-MM-DD date string
+  const todayMT = new Date().toLocaleDateString("en-CA", { timeZone: "America/Denver" });
+  const todayDate = new Date(todayMT);
+  const thenDate = new Date(dateString);
+  return Math.floor((todayDate - thenDate) / (1000 * 60 * 60 * 24));
 }
 
 function fillTemplate(template, contact) {
@@ -404,22 +407,13 @@ async function enrollNewApolloContacts() {
       body: JSON.stringify({
         filterGroups: [
           {
-            // New contacts with no sequence_active set
             filters: [
               { propertyName: "hubspot_owner_id", operator: "EQ", value: ownerId },
               { propertyName: "sequence_active", operator: "NOT_HAS_PROPERTY" },
             ],
           },
-          {
-            // Contacts explicitly set to false (manually added to queue)
-            filters: [
-              { propertyName: "hubspot_owner_id", operator: "EQ", value: ownerId },
-              { propertyName: "sequence_active", operator: "EQ", value: "false" },
-              { propertyName: "sequence_step", operator: "NOT_HAS_PROPERTY" },
-            ],
-          },
         ],
-        properties: ["firstname", "lastname", "email", "company", "sequence_active", "sequence_step"],
+        properties: ["firstname", "lastname", "email", "company", "sequence_active"],
         limit: 100,
       }),
     }
@@ -875,7 +869,7 @@ async function main() {
 
         sent++;
 
-        const randomDelay = Math.floor(Math.random() * (7 - 3 + 1) + 3) * 60 * 1000;
+        const randomDelay = Math.floor(Math.random() * (5 - 2 + 1) + 2) * 60 * 1000;
         console.log(`  ⏱  Waiting ${Math.round(randomDelay / 60000)} min before next email...`);
         await new Promise((r) => setTimeout(r, randomDelay));
       } catch (err) {
