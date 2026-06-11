@@ -1,11 +1,15 @@
 // ============================================================
 // AI SALES EMAIL SEQUENCER — THE PHMP
-// 8-touch sequence | Microsoft Graph sending | HubSpot logging
-// Auto-enrolls new contacts owned by Seth
-// Runs automatically every morning via GitHub Actions
+// 8-touch sequence | 3-account rotation
+// Account 1: seth@3markslc.com — Microsoft Graph (existing contacts)
+// Account 2: Seth@uin.us.com — SMTP / Network Solutions
+// Account 3: seth@eliteinsurancegroup.net — SMTP / Network Solutions
+// New contacts auto-assigned to whichever account has capacity
+// Each account sends up to 60/day — 180/day total capacity
 // ============================================================
 
 const Anthropic = require("@anthropic-ai/sdk");
+const nodemailer = require("nodemailer");
 
 // -------------------------------------------------------------------
 // PHMP PRODUCT BRIEFING
@@ -305,12 +309,53 @@ function pickSubjectLine(contact) {
 }
 
 // -------------------------------------------------------------------
-// CONFIG
+// SENDER ACCOUNTS
+// Account 1 uses Microsoft Graph. Accounts 2 and 3 use SMTP.
 // -------------------------------------------------------------------
-const CONFIG = {
-  senderName: process.env.SENDER_NAME || "Seth Christensen",
-  senderCompany: process.env.SENDER_COMPANY || "The PHMP",
-};
+const ACCOUNTS = [
+  {
+    id: 1,
+    email: process.env.SENDER_EMAIL,           // seth@3markslc.com
+    type: "graph",
+    hubspotField: "sender_account",
+    dailyCap: 60,
+  },
+  {
+    id: 2,
+    email: process.env.SMTP_EMAIL_2,           // Seth@uin.us.com
+    type: "smtp",
+    hubspotField: "sender_account",
+    dailyCap: 60,
+  },
+  {
+    id: 3,
+    email: process.env.SMTP_EMAIL_3,           // seth@eliteinsurancegroup.net
+    type: "smtp",
+    hubspotField: "sender_account",
+    dailyCap: 60,
+  },
+];
+
+// Track sends per account this run
+const accountSentCount = { 1: 0, 2: 0, 3: 0 };
+
+// -------------------------------------------------------------------
+// SMTP TRANSPORTER (shared config, different auth per account)
+// -------------------------------------------------------------------
+function createSmtpTransporter(accountId) {
+  const auth =
+    accountId === 2
+      ? { user: process.env.SMTP_EMAIL_2, pass: process.env.SMTP_PASSWORD_2 }
+      : { user: process.env.SMTP_EMAIL_3, pass: process.env.SMTP_PASSWORD_3 };
+
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || "587"),
+    secure: false,        // STARTTLS
+    auth,
+    tls: { rejectUnauthorized: true },
+  });
+}
 
 // -------------------------------------------------------------------
 // CLIENTS
@@ -340,8 +385,23 @@ function fillTemplate(template, contact) {
     .replace(/{{firstName}}/g, contact.firstName || "there");
 }
 
+// Pick the account with remaining capacity for new enrollments
+// Existing contacts stay with whatever account they were assigned to
+function pickAccountForNewContact() {
+  for (const account of ACCOUNTS) {
+    if (accountSentCount[account.id] < account.dailyCap) {
+      return account;
+    }
+  }
+  return null; // All accounts at cap
+}
+
+function getAccountById(id) {
+  return ACCOUNTS.find((a) => a.id === parseInt(id)) || ACCOUNTS[0];
+}
+
 // -------------------------------------------------------------------
-// STEP 1: Auto-enroll new contacts owned by Seth
+// STEP 1: Auto-enroll new contacts — assign to an available account
 // -------------------------------------------------------------------
 async function enrollNewContacts() {
   console.log("🔍 Checking for new contacts to enroll...");
@@ -380,55 +440,87 @@ async function enrollNewContacts() {
   for (const contact of data.results) {
     if (!contact.properties.email) continue;
 
+    // Assign to whichever account still has capacity today
+    const assignedAccount = pickAccountForNewContact();
+    const accountId = assignedAccount ? String(assignedAccount.id) : "1";
+
     await fetch(`https://api.hubapi.com/crm/v3/objects/contacts/${contact.id}`, {
       method: "PATCH",
       headers: hubspotHeaders,
       body: JSON.stringify({
-        properties: { sequence_active: "true", sequence_step: "0" },
+        properties: {
+          sequence_active: "true",
+          sequence_step: "0",
+          sender_account: accountId,
+        },
       }),
     });
 
-    console.log(`  Enrolled: ${contact.properties.firstname || ""} ${contact.properties.lastname || ""} @ ${contact.properties.company || "unknown"}`);
+    console.log(
+      `  Enrolled: ${contact.properties.firstname || ""} ${contact.properties.lastname || ""} @ ${contact.properties.company || "unknown"} → Account ${accountId}`
+    );
   }
 }
 
 // -------------------------------------------------------------------
-// STEP 2: Fetch active prospects from HubSpot
+// STEP 2: Fetch active prospects from HubSpot (paginated)
 // -------------------------------------------------------------------
 async function getActiveProspects() {
   console.log("📋 Fetching active prospects from HubSpot...");
 
-  const response = await fetch(
-    "https://api.hubapi.com/crm/v3/objects/contacts/search",
-    {
-      method: "POST",
-      headers: hubspotHeaders,
-      body: JSON.stringify({
-        filterGroups: [
-          {
-            filters: [
-              { propertyName: "sequence_active", operator: "EQ", value: "true" },
-            ],
-          },
-        ],
-        properties: [
-          "firstname", "lastname", "email", "company",
-          "jobtitle", "industry", "city", "state",
-          "numberofemployees", "sequence_step", "sequence_active",
-          "last_email_sent", "thread_id", "thread_subject",
-        ],
-        limit: 200,
-      }),
-    }
-  );
+  const allContacts = [];
+  let after = undefined;
 
-  const data = await response.json();
-  if (!data.results) {
-    console.log("  HubSpot error:", JSON.stringify(data));
-    return [];
+  while (true) {
+    const body = {
+      filterGroups: [
+        {
+          filters: [
+            { propertyName: "sequence_active", operator: "EQ", value: "true" },
+          ],
+        },
+      ],
+      properties: [
+        "firstname", "lastname", "email", "company",
+        "jobtitle", "industry", "city", "state",
+        "numberofemployees", "sequence_step", "sequence_active",
+        "last_email_sent", "thread_id", "thread_subject",
+        "sender_account",
+      ],
+      limit: 200,
+    };
+
+    if (after) body.after = after;
+
+    const response = await fetch(
+      "https://api.hubapi.com/crm/v3/objects/contacts/search",
+      {
+        method: "POST",
+        headers: hubspotHeaders,
+        body: JSON.stringify(body),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!data.results) {
+      console.log("  HubSpot error:", JSON.stringify(data));
+      break;
+    }
+
+    allContacts.push(...data.results);
+
+    if (data.paging && data.paging.next && data.paging.next.after) {
+      after = data.paging.next.after;
+      console.log(`  Fetched ${allContacts.length} so far, getting more...`);
+    } else {
+      break;
+    }
   }
 
-  return data.results.map((c) => ({
+  console.log(`  Total active contacts fetched: ${allContacts.length}`);
+
+  return allContacts.map((c) => ({
     id: c.id,
     firstName: c.properties.firstname || "",
     lastName: c.properties.lastname || "",
@@ -443,6 +535,8 @@ async function getActiveProspects() {
     lastEmailSent: c.properties.last_email_sent || null,
     threadId: c.properties.thread_id || null,
     threadSubject: c.properties.thread_subject || null,
+    // Default to account 1 for any existing contacts without sender_account set
+    senderAccountId: parseInt(c.properties.sender_account || "1"),
   }));
 }
 
@@ -536,7 +630,7 @@ FORMATTING:
 }
 
 // -------------------------------------------------------------------
-// STEP 5: Get Microsoft Outlook token
+// MICROSOFT GRAPH — get token
 // -------------------------------------------------------------------
 async function getOutlookToken() {
   const url = `https://login.microsoftonline.com/${process.env.MICROSOFT_TENANT_ID}/oauth2/v2.0/token`;
@@ -561,9 +655,9 @@ async function getOutlookToken() {
 }
 
 // -------------------------------------------------------------------
-// STEP 6a: Send Email 1 — fresh thread
+// MICROSOFT GRAPH — send first email (new thread)
 // -------------------------------------------------------------------
-async function sendFirstEmail(token, contact, subject, body) {
+async function sendFirstEmailGraph(token, contact, subject, body) {
   const senderEmail = process.env.SENDER_EMAIL;
 
   const sendRes = await fetch(
@@ -583,7 +677,7 @@ async function sendFirstEmail(token, contact, subject, body) {
   );
 
   if (sendRes.status !== 202) {
-    throw new Error(`Send failed: ${await sendRes.text()}`);
+    throw new Error(`Graph send failed: ${await sendRes.text()}`);
   }
 
   await new Promise((r) => setTimeout(r, 3000));
@@ -601,14 +695,14 @@ async function sendFirstEmail(token, contact, subject, body) {
     return null;
   }
 
-  console.log(`  📧 Email 1 sent | Thread ID captured`);
+  console.log(`  📧 Email 1 sent via Graph | Thread ID captured`);
   return sentMsg.internetMessageId;
 }
 
 // -------------------------------------------------------------------
-// STEP 6b: Send follow-up — reply in existing thread
+// MICROSOFT GRAPH — send reply in existing thread
 // -------------------------------------------------------------------
-async function sendReplyEmail(token, contact, body, threadInternetMessageId, threadSubject) {
+async function sendReplyEmailGraph(token, contact, body, threadInternetMessageId, threadSubject) {
   const senderEmail = process.env.SENDER_EMAIL;
 
   const findRes = await fetch(
@@ -649,8 +743,9 @@ async function sendReplyEmail(token, contact, body, threadInternetMessageId, thr
       { method: "POST", headers: { Authorization: `Bearer ${token}` } }
     );
 
-    console.log(`  📧 Reply sent in thread`);
+    console.log(`  📧 Reply sent in thread via Graph`);
   } else {
+    // Fallback: send as new email with Re: subject
     const reSubject = threadSubject?.startsWith("Re: ") ? threadSubject : `Re: ${threadSubject}`;
     const fallbackRes = await fetch(
       `https://graph.microsoft.com/v1.0/users/${senderEmail}/sendMail`,
@@ -668,9 +763,49 @@ async function sendReplyEmail(token, contact, body, threadInternetMessageId, thr
       }
     );
 
-    if (fallbackRes.status !== 202) throw new Error(`Fallback send failed: ${await fallbackRes.text()}`);
-    console.log(`  📧 Reply sent (fallback)`);
+    if (fallbackRes.status !== 202) throw new Error(`Graph fallback send failed: ${await fallbackRes.text()}`);
+    console.log(`  📧 Reply sent via Graph (fallback)`);
   }
+}
+
+// -------------------------------------------------------------------
+// SMTP — send first email (new thread)
+// Returns the Message-ID for threading
+// -------------------------------------------------------------------
+async function sendFirstEmailSmtp(accountId, contact, subject, body) {
+  const transporter = createSmtpTransporter(accountId);
+  const fromEmail = accountId === 2 ? process.env.SMTP_EMAIL_2 : process.env.SMTP_EMAIL_3;
+
+  const info = await transporter.sendMail({
+    from: `Seth Christensen <${fromEmail}>`,
+    to: contact.email,
+    subject,
+    text: body,
+  });
+
+  console.log(`  📧 Email 1 sent via SMTP (Account ${accountId}) | Message-ID: ${info.messageId}`);
+  return info.messageId;
+}
+
+// -------------------------------------------------------------------
+// SMTP — send reply (thread by In-Reply-To header)
+// -------------------------------------------------------------------
+async function sendReplyEmailSmtp(accountId, contact, body, threadMessageId, threadSubject) {
+  const transporter = createSmtpTransporter(accountId);
+  const fromEmail = accountId === 2 ? process.env.SMTP_EMAIL_2 : process.env.SMTP_EMAIL_3;
+  const reSubject = threadSubject?.startsWith("Re: ") ? threadSubject : `Re: ${threadSubject}`;
+
+  const info = await transporter.sendMail({
+    from: `Seth Christensen <${fromEmail}>`,
+    to: contact.email,
+    subject: reSubject,
+    text: body,
+    inReplyTo: threadMessageId,
+    references: threadMessageId,
+  });
+
+  console.log(`  📧 Reply sent via SMTP (Account ${accountId})`);
+  return info.messageId;
 }
 
 // -------------------------------------------------------------------
@@ -686,6 +821,7 @@ async function updateHubSpot(contact, emailBody, subject, newStep, threadId, thr
     sequence_active: isComplete ? "false" : "true",
   };
 
+  // Save thread ID and subject after email 1 (step becomes 1)
   if (newStep === 1 && threadId) {
     updates.thread_id = threadId;
     updates.thread_subject = subject;
@@ -722,7 +858,7 @@ async function updateHubSpot(contact, emailBody, subject, newStep, threadId, thr
 // MAIN
 // -------------------------------------------------------------------
 async function main() {
-  console.log("\n🚀 PHMP Sales Email Sequencer\n");
+  console.log("\n🚀 PHMP Sales Email Sequencer — 3-Account Rotation\n");
   console.log(`📅 ${new Date().toDateString()}\n`);
 
   const isManualRun = process.env.GITHUB_EVENT_NAME === "workflow_dispatch";
@@ -736,8 +872,9 @@ async function main() {
   }
 
   try {
-    console.log("🔑 Authenticating with Outlook...");
-    const initialToken = await getOutlookToken();
+    // Pre-auth Microsoft Graph for account 1
+    console.log("🔑 Authenticating with Outlook (Account 1)...");
+    let graphToken = await getOutlookToken();
     console.log("  ✅ Connected\n");
 
     await enrollNewContacts();
@@ -753,21 +890,28 @@ async function main() {
       return;
     }
 
-    let sent = 0;
-    let skipped = 0;
-    const DAILY_SEND_CAP = 60;
+    // Sort prospects by account so we can batch sends cleanly
+    // (not strictly required but keeps logs readable)
+    prospects.sort((a, b) => a.senderAccountId - b.senderAccountId);
+
+    let totalSent = 0;
+    let totalSkipped = 0;
 
     for (const contact of prospects) {
-      if (sent >= DAILY_SEND_CAP) {
-        console.log(`\n📨 Daily cap of ${DAILY_SEND_CAP} reached — rest picked up tomorrow`);
-        break;
+      const account = getAccountById(contact.senderAccountId);
+
+      // Check this account's daily cap
+      if (accountSentCount[account.id] >= account.dailyCap) {
+        console.log(`⏭️  ${contact.firstName} ${contact.lastName} — Account ${account.id} at daily cap`);
+        totalSkipped++;
+        continue;
       }
 
       const step = contact.sequenceStep;
 
       if (step >= SEQUENCE.length) {
         console.log(`⏭️  ${contact.firstName} ${contact.lastName} — sequence complete`);
-        skipped++;
+        totalSkipped++;
         continue;
       }
 
@@ -778,13 +922,13 @@ async function main() {
         const daysNeeded = emailDef.day - SEQUENCE[step - 1].day;
         if (daysWaited < daysNeeded) {
           console.log(`⏳ ${contact.firstName} ${contact.lastName} — waiting (${daysWaited}/${daysNeeded} days until email ${step + 1})`);
-          skipped++;
+          totalSkipped++;
           continue;
         }
       }
 
       console.log(`\n👤 ${contact.firstName} ${contact.lastName} @ ${contact.company}`);
-      console.log(`   Email ${step + 1}/8 (Day ${emailDef.day})`);
+      console.log(`   Email ${step + 1}/8 (Day ${emailDef.day}) | Account ${account.id} (${account.email})`);
 
       try {
         let research = "No research for this step.";
@@ -793,33 +937,53 @@ async function main() {
         const body = await writeEmail(contact, step, research);
         const subject = (step === 0) ? pickSubjectLine(contact) : fillTemplate(emailDef.subject, contact);
 
-        const token = await getOutlookToken();
+        if (account.type === "graph") {
+          // Refresh token occasionally (long runs)
+          graphToken = await getOutlookToken();
 
-        if (step === 0) {
-          const threadId = await sendFirstEmail(token, contact, subject, body);
-          await updateHubSpot(contact, body, subject, step + 1, threadId, subject);
+          if (step === 0) {
+            const threadId = await sendFirstEmailGraph(graphToken, contact, subject, body);
+            await updateHubSpot(contact, body, subject, step + 1, threadId, subject);
+          } else {
+            const threadSubject = contact.threadSubject || subject;
+            await sendReplyEmailGraph(graphToken, contact, body, contact.threadId, threadSubject);
+            await updateHubSpot(contact, body, null, step + 1, null, null);
+          }
         } else {
-          const threadSubject = contact.threadSubject || subject;
-          await sendReplyEmail(token, contact, body, contact.threadId, threadSubject);
-          await updateHubSpot(contact, body, null, step + 1, null, null);
+          // SMTP accounts 2 or 3
+          if (step === 0) {
+            const messageId = await sendFirstEmailSmtp(account.id, contact, subject, body);
+            await updateHubSpot(contact, body, subject, step + 1, messageId, subject);
+          } else {
+            const threadSubject = contact.threadSubject || subject;
+            await sendReplyEmailSmtp(account.id, contact, body, contact.threadId, threadSubject);
+            await updateHubSpot(contact, body, null, step + 1, null, null);
+          }
         }
 
-        sent++;
+        accountSentCount[account.id]++;
+        totalSent++;
 
-        const randomDelay = Math.floor(Math.random() * (5 - 2 + 1) + 2) * 60 * 1000;
+        // 1-2 minute gap between sends (accounts are staggered naturally)
+        const randomDelay = Math.floor(Math.random() * (2 - 1 + 1) + 1) * 60 * 1000;
         console.log(`  ⏱  Waiting ${Math.round(randomDelay / 60000)} min before next email...`);
         await new Promise((r) => setTimeout(r, randomDelay));
+
       } catch (err) {
         console.error(`  ❌ Error for ${contact.firstName}: ${err.message}`);
       }
     }
 
     console.log("\n✅ Done!");
-    console.log(`   Sent: ${sent} | Skipped: ${skipped}`);
+    console.log(`   Total sent: ${totalSent} | Total skipped: ${totalSkipped}`);
+    console.log(`   Account 1 (Graph):  ${accountSentCount[1]} sent`);
+    console.log(`   Account 2 (SMTP):   ${accountSentCount[2]} sent`);
+    console.log(`   Account 3 (SMTP):   ${accountSentCount[3]} sent`);
+
   } catch (err) {
     console.error("Fatal error:", err);
     process.exit(1);
   }
 }
 
-main();
+main();     
