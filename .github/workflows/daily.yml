@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: "0 15 * * 1-5"  # 9am Mountain Time (UTC-6), weekdays only
   workflow_dispatch:
-jobs:h
+jobs:
   send-emails:
     runs-on: ubuntu-latest
     steps:
