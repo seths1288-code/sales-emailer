@@ -1,26 +1,20 @@
 name: Daily Sales Emails
-
 on:
   schedule:
     - cron: "0 15 * * 1-5"  # 9am Mountain Time (UTC-6), weekdays only
   workflow_dispatch:
-
 jobs:
   send-emails:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-
       - name: Install dependencies
         run: npm install
-
       - name: Run email sequencer
         env:
           HUBSPOT_API_KEY: ${{ secrets.HUBSPOT_API_KEY }}
@@ -31,4 +25,10 @@ jobs:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           SENDER_NAME: ${{ secrets.SENDER_NAME }}
           SENDER_COMPANY: ${{ secrets.SENDER_COMPANY }}
-        run: node index.js
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_EMAIL_2: ${{ secrets.SMTP_EMAIL_2 }}
+          SMTP_PASSWORD_2: ${{ secrets.SMTP_PASSWORD_2 }}
+          SMTP_EMAIL_3: ${{ secrets.SMTP_EMAIL_3 }}
+          SMTP_PASSWORD_3: ${{ secrets.SMTP_PASSWORD_3 }}
+        run: node sequencer.js
