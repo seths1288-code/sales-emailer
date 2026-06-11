@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: "0 15 * * 1-5"  # 9am Mountain Time (UTC-6), weekdays only
   workflow_dispatch:
-jobs:
+jobs:h
   send-emails:
     runs-on: ubuntu-latest
     steps:
@@ -15,7 +15,7 @@ jobs:
           node-version: "20"
       - name: Install dependencies
         run: npm install
-      - name: Run email sequencer
+      - name: Run email sequencerh
         env:
           HUBSPOT_API_KEY: ${{ secrets.HUBSPOT_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -31,4 +31,4 @@ jobs:
           SMTP_PASSWORD_2: ${{ secrets.SMTP_PASSWORD_2 }}
           SMTP_EMAIL_3: ${{ secrets.SMTP_EMAIL_3 }}
           SMTP_PASSWORD_3: ${{ secrets.SMTP_PASSWORD_3 }}
-        run: node sequencer.js
+        run: node index.js
