@@ -935,7 +935,21 @@ async function main() {
         if (emailDef.research) research = await researchCompany(contact);
 
         const body = await writeEmail(contact, step, research);
-        const subject = (step === 0) ? pickSubjectLine(contact) : fillTemplate(emailDef.subject, contact);
+
+        // Email 1 gets a fresh subject line picked by title.
+        // All follow-ups use the stored threadSubject (Re: original subject).
+        // NEVER allow null as a subject under any circumstances.
+        let subject;
+        if (step === 0) {
+          subject = pickSubjectLine(contact);
+        } else {
+          const base = contact.threadSubject || pickSubjectLine(contact);
+          subject = base.startsWith("Re: ") ? base : `Re: ${base}`;
+        }
+
+        if (!subject || subject.trim() === "" || subject === "null") {
+          subject = "Re: following up";
+        }
 
         if (account.type === "graph") {
           // Refresh token occasionally (long runs)
@@ -945,9 +959,8 @@ async function main() {
             const threadId = await sendFirstEmailGraph(graphToken, contact, subject, body);
             await updateHubSpot(contact, body, subject, step + 1, threadId, subject);
           } else {
-            const threadSubject = contact.threadSubject || subject;
-            await sendReplyEmailGraph(graphToken, contact, body, contact.threadId, threadSubject);
-            await updateHubSpot(contact, body, null, step + 1, null, null);
+            await sendReplyEmailGraph(graphToken, contact, body, contact.threadId, subject);
+            await updateHubSpot(contact, body, subject, step + 1, null, null);
           }
         } else {
           // SMTP accounts 2 or 3
@@ -955,9 +968,8 @@ async function main() {
             const messageId = await sendFirstEmailSmtp(account.id, contact, subject, body);
             await updateHubSpot(contact, body, subject, step + 1, messageId, subject);
           } else {
-            const threadSubject = contact.threadSubject || subject;
-            await sendReplyEmailSmtp(account.id, contact, body, contact.threadId, threadSubject);
-            await updateHubSpot(contact, body, null, step + 1, null, null);
+            await sendReplyEmailSmtp(account.id, contact, body, contact.threadId, subject);
+            await updateHubSpot(contact, body, subject, step + 1, null, null);
           }
         }
 
@@ -986,4 +998,4 @@ async function main() {
   }
 }
 
-main();     
+main();
