@@ -863,9 +863,9 @@ async function main() {
 
   const isManualRun = process.env.GITHUB_EVENT_NAME === "workflow_dispatch";
   if (!isManualRun) {
-    const randomStartDelay = Math.floor(Math.random() * 3 * 60 * 60 * 1000);
+    const randomStartDelay = Math.floor(Math.random() * 30 * 60 * 1000);
     const startMins = Math.round(randomStartDelay / 60000);
-    console.log(`⏱  Random start delay: ${Math.floor(startMins / 60)}h ${startMins % 60}m\n`);
+    console.log(`⏱  Random start delay: ${startMins}m\n`);
     await new Promise((r) => setTimeout(r, randomStartDelay));
   } else {
     console.log("Manual run detected — skipping random delay\n");
@@ -976,9 +976,9 @@ async function main() {
         accountSentCount[account.id]++;
         totalSent++;
 
-        // 1-2 minute gap between sends (accounts are staggered naturally)
-        const randomDelay = Math.floor(Math.random() * (2 - 1 + 1) + 1) * 60 * 1000;
-        console.log(`  ⏱  Waiting ${Math.round(randomDelay / 60000)} min before next email...`);
+        // 30-60 second gap between sends
+        const randomDelay = Math.floor(Math.random() * (60 - 30 + 1) + 30) * 1000;
+        console.log(`  ⏱  Waiting ${Math.round(randomDelay / 1000)}s before next email...`);
         await new Promise((r) => setTimeout(r, randomDelay));
 
       } catch (err) {
