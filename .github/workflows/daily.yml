@@ -1,7 +1,7 @@
 name: Daily Sales Emails
 on:
   schedule:
-    - cron: "0 15 * * 1-5"  # 9am Mountain Time (UTC-6), weekdays only
+    - cron: "0 16 * * 1-5"  # 9am MDT (UTC-7 summer), weekdays only
   workflow_dispatch:
 jobs:
   send-emails:
@@ -15,7 +15,7 @@ jobs:
           node-version: "20"
       - name: Install dependencies
         run: npm install
-      - name: Run email sequencerh
+      - name: Run email sequencer
         env:
           HUBSPOT_API_KEY: ${{ secrets.HUBSPOT_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
