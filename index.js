@@ -89,7 +89,9 @@ One flowing paragraph. No line breaks between sentences whatsoever.
 No bullet points, no bold, no dashes, no hyphens, no colons for effect, no em dashes.
 No symbols of any kind.
 Do not capitalize the first word after "Hi [Name],".
-Loose contractions: "thats" "youre" "ill" "dont" "ive" "havent".
+Always capitalize "I" every single time. Never write lowercase "i" when referring to yourself.
+Grammar is casual but not sloppy. Write like a sharp person firing off a quick email between meetings.
+Contractions are fine: "that's" "you're" "I'll" "don't" "I've" "haven't" but always apostrophized correctly.
 Never say: synergy, game changer, revolutionary, best in class, solution, leverage, streamline.
 Never imply we replace anything. We sit alongside and add on top.
 Sign off always exactly: Seth Christensen | The PHMP
@@ -618,7 +620,7 @@ FORMATTING:
 - Write the entire body as one single paragraph. no line breaks between sentences.
 - End with exactly: Seth Christensen | The PHMP
 - No subject line, no bullet points, no bold, no dashes, no hyphens, no symbols
-- Loose contractions: "thats" "youre" "ill" "dont"`;
+- Always capitalize "I". Contractions are fine but apostrophized correctly: "that's" "you're" "I'll" "don't"`;
 
   const response = await claude.messages.create({
     model: "claude-sonnet-4-6",
