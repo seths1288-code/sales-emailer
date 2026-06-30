@@ -858,6 +858,57 @@ async function updateHubSpot(contact, emailBody, subject, newStep, threadId, thr
   console.log(`  ✅ HubSpot updated (step ${newStep}${isComplete ? " — sequence complete" : ""})`);
 }
 
+
+// -------------------------------------------------------------------
+// Check how many emails have already been sent today per account
+// This makes the daily cap true across multiple runs in the same day
+// -------------------------------------------------------------------
+async function loadTodaySentCounts() {
+  const today = new Date().toISOString().split("T")[0];
+  console.log("📊 Checking today's send counts from HubSpot...");
+
+  for (const account of ACCOUNTS) {
+    let count = 0;
+    let after = undefined;
+
+    while (true) {
+      const body = {
+        filterGroups: [{
+          filters: [
+            { propertyName: "last_email_sent", operator: "EQ", value: today },
+            { propertyName: "sender_account", operator: "EQ", value: String(account.id) },
+          ],
+        }],
+        properties: ["email"],
+        limit: 200,
+      };
+
+      if (after) body.after = after;
+
+      const response = await fetch("https://api.hubapi.com/crm/v3/objects/contacts/search", {
+        method: "POST",
+        headers: hubspotHeaders,
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+      if (!data.results) break;
+
+      count += data.results.length;
+
+      if (data.paging && data.paging.next && data.paging.next.after) {
+        after = data.paging.next.after;
+      } else {
+        break;
+      }
+    }
+
+    accountSentCount[account.id] = count;
+    console.log(`  Account ${account.id}: ${count} already sent today (cap: ${account.dailyCap})`);
+  }
+  console.log("");
+}
+
 // -------------------------------------------------------------------
 // MAIN
 // -------------------------------------------------------------------
@@ -881,6 +932,7 @@ async function main() {
     let graphToken = await getOutlookToken();
     console.log("  ✅ Connected\n");
 
+    await loadTodaySentCounts();
     await enrollNewContacts();
     console.log("");
 
