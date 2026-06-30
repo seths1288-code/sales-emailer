@@ -86,7 +86,8 @@ TONE AND STYLE — NON NEGOTIABLE:
 Write like a real person typing fast between meetings. Not a marketer.
 Under 50 words in the body. Under 35 for follow-ups. Email 3 can go to 55.
 One flowing paragraph. No line breaks between sentences whatsoever.
-No bullet points, no bold, no dashes, no hyphens, no colons for effect, no em dashes.
+NO HYPHENS EVER. Not a single one. No em dashes, no en dashes, no hyphens between words, no dashes of any kind anywhere in the email. This is the most important formatting rule. If you are about to type a hyphen or dash, use a period or rewrite the sentence instead.
+No bullet points, no bold, no colons for effect.
 No symbols of any kind.
 Do not capitalize the first word after "Hi [Name],".
 Always capitalize "I" every single time. Never write lowercase "i" when referring to yourself.
@@ -327,14 +328,14 @@ const ACCOUNTS = [
     email: process.env.SMTP_EMAIL_2,           // Seth@uin.us.com
     type: "smtp",
     hubspotField: "sender_account",
-    dailyCap: 60,
+    dailyCap: 20,
   },
   {
     id: 3,
     email: process.env.SMTP_EMAIL_3,           // seth@eliteinsurancegroup.net
     type: "smtp",
     hubspotField: "sender_account",
-    dailyCap: 60,
+    dailyCap: 20,
   },
 ];
 
@@ -619,7 +620,8 @@ FORMATTING:
 - Start with: "Hi ${contact.firstName},"
 - Write the entire body as one single paragraph. no line breaks between sentences.
 - End with exactly: Seth Christensen | The PHMP
-- No subject line, no bullet points, no bold, no dashes, no hyphens, no symbols
+- No subject line, no bullet points, no bold, no symbols
+- ABSOLUTELY NO HYPHENS OR DASHES OF ANY KIND. Not em dashes, not en dashes, not hyphens between words. Use a period or rewrite instead.
 - Always capitalize "I". Contractions are fine but apostrophized correctly: "that's" "you're" "I'll" "don't"`;
 
   const response = await claude.messages.create({
