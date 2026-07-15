@@ -57,6 +57,19 @@
 // would ever be sent to them. Added markSequenceInactive() so any
 // contact caught in that state gets properly closed out the first
 // time the runner sees them, no email, just one HubSpot PATCH.
+//
+// DELIVERABILITY UPDATE (v11): the ORIGINALITY RULE already stopped
+// Claude from reusing the same literal sentence across contacts, but
+// bulk spam detection at Microsoft/Google doesn't only look for exact
+// duplicate text, it also clusters on structural sameness: same word
+// count, same sentence shape, same idea order, across many emails
+// from one sender in a short window. Since email 1 picks the same
+// hook angle for everyone sharing a job title, a batch of same-titled
+// recipients could still look near identical in shape even with
+// different words. Added a CROSS RECIPIENT STRUCTURAL VARIATION rule
+// so the shape of the email varies (what leads, statement vs
+// question opening, where the research detail lands) even when the
+// underlying angle for that role stays the same.
 // ============================================================
 
 const Anthropic = require("@anthropic-ai/sdk");
@@ -152,6 +165,9 @@ Do NOT mention KBA.
 
 ORIGINALITY RULE:
 Every bracketed "Examples:" line anywhere in these instructions, including per email instructions below, is a style reference only. It shows you the register and the kind of unexpected line that works, nothing more. Never copy an example phrase word for word. You are writing to hundreds of different people, so if you reuse the same sentence verbatim across contacts it reads as an obvious template and gets caught as spam. Write an original sentence in that same spirit every single time, even when the underlying instruction is identical to one you've followed before.
+
+CROSS RECIPIENT STRUCTURAL VARIATION:
+Many recipients share the same job title, which means email 1 will often point them toward the same underlying hook angle. That targeting is intentional and should stay, the angle should match the role. But do not let every recipient with that role read as the same shape of email either. Vary which fact or number leads, vary whether the first line is phrased as a statement or a question, vary whether the research detail comes before or after the hook, vary sentence length and rhythm. Bulk spam detection systems at Microsoft and Google look for structural sameness across many emails from one sender, meaning same word count, same sentence order, same cadence, not only literally repeated sentences. Fresh wording alone is not enough if every email built on the same hook has the identical shape. Treat the hook angle as the one fixed thing and vary everything around it.
 
 AVOID SPAM PATTERNING:
 Never use these exact phrases, they are heavily weighted by spam filters and scam detection because they show up constantly in actual scam email: "too good to be true", "no catch", "risk free", "guaranteed", "act now", "limited time", "100% free", "click here", "double your income". If the underlying idea calls for that kind of surprise, say it conversationally instead, like "I get why this sounds hard to believe" or "this surprised me too the first time I saw the numbers." Also avoid stacking short punchy fragments separated only by periods, like "costs nothing. changes nothing. adds everything." That cadence reads as an ad headline, not a person typing. Write in full relaxed sentences instead.
